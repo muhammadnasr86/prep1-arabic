@@ -1708,6 +1708,449 @@
       font-weight: 700;
     }
 
+  
+    /* ================= STATION SYSTEM (PHASE 1) ================= */
+    :root {
+      --topbar-h: 108px;
+    }
+
+    /* Hide legacy long-page quick-nav chips inside lessons */
+    .view-panel .quick-nav {
+      display: none !important;
+    }
+
+    /* Desktop / Laptop >= 900px: Right sticky sidebar + comfortable reading column (max 760px) */
+    .lesson-shell {
+      max-width: 1100px;
+      margin: 20px auto 64px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 760px);
+      gap: 26px;
+      align-items: start;
+      justify-content: center;
+    }
+
+    .station-sidebar {
+      position: sticky;
+      top: calc(var(--topbar-h) + 14px);
+      max-height: calc(100vh - var(--topbar-h) - 28px);
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .st-side-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+      font-family: 'Baloo Bhaijaan 2', 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 16.5px;
+      color: var(--theme);
+    }
+    .st-side-count {
+      font-family: 'Cairo', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      padding: 2px 9px;
+      border-radius: 999px;
+    }
+    .st-side-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      padding-left: 2px;
+      flex: 1;
+    }
+    .st-nav-item {
+      width: 100%;
+      min-height: 44px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1.5px solid transparent;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: right;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .st-nav-item:hover {
+      background: var(--bg-subtle);
+      border-color: var(--border);
+    }
+    .st-nav-item.active {
+      background: var(--theme);
+      color: #fff;
+      border-color: var(--theme);
+      box-shadow: 0 4px 12px rgba(17, 35, 71, 0.14);
+    }
+    .st-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .st-nav-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .st-nav-item.active .st-nav-num {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+    .st-nav-item.done:not(.active) .st-nav-num {
+      background: var(--success-soft);
+      color: var(--success);
+    }
+    .st-nav-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .st-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--success);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      display: none;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .st-nav-item.done .st-check {
+      display: grid;
+    }
+    .st-nav-item.active.done .st-check {
+      background: #fff;
+      color: var(--success);
+    }
+
+    .st-side-foot {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1.5px solid var(--border);
+    }
+    .st-restart-btn {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+    .st-restart-btn:hover {
+      border-color: var(--theme);
+      color: var(--theme);
+    }
+
+    /* Main Station Reading Column */
+    .station-main {
+      width: 100%;
+      max-width: 760px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .st-resume-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--theme-soft);
+      border: 1.5px solid var(--border);
+      border-right: 4px solid var(--theme);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 14.5px;
+      font-weight: 700;
+    }
+    .st-resume-bar.show {
+      display: flex;
+    }
+
+    .station-panel {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .station-panel.active {
+      display: flex;
+      animation: fadeSlide 0.24s ease;
+    }
+
+    /* Inline Prev / Next Bar (at bottom of each station on desktop) */
+    .st-inline-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .st-inline-nav .btn {
+      min-width: 132px;
+      min-height: 46px;
+    }
+    .st-inline-nav .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: none;
+    }
+    .st-inline-status {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Mobile Top Station Strip (hidden >= 900px) */
+    .mobile-st-bar {
+      display: none;
+      position: sticky;
+      top: var(--topbar-h);
+      z-index: 105;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1.5px solid var(--border);
+      padding: 8px 14px 10px;
+    }
+    body.dark .mobile-st-bar {
+      background: rgba(13, 19, 33, 0.96);
+    }
+    .mobile-st-trigger {
+      width: 100%;
+      min-height: 44px;
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      text-align: right;
+    }
+    .mobile-st-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+    }
+    .mobile-st-title {
+      font-weight: 800;
+      font-size: 14.5px;
+      color: var(--theme);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mobile-st-badge {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mobile-st-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .st-dot {
+      height: 6px;
+      flex: 1;
+      max-width: 24px;
+      border-radius: 999px;
+      background: var(--border);
+      transition: background 0.2s ease, flex-grow 0.2s ease;
+    }
+    .st-dot.done {
+      background: var(--success);
+    }
+    .st-dot.active {
+      background: var(--theme);
+      flex-grow: 2;
+      max-width: 38px;
+    }
+
+    /* Mobile Fixed Bottom Prev / Next Bar (hidden >= 900px) */
+    .mobile-st-footer {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 115;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(12px);
+      border-top: 1.5px solid var(--border);
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+      box-shadow: 0 -6px 22px rgba(13, 19, 33, 0.10);
+      gap: 10px;
+      align-items: center;
+    }
+    body.dark .mobile-st-footer {
+      background: rgba(13, 19, 33, 0.97);
+      box-shadow: 0 -6px 22px rgba(0, 0, 0, 0.45);
+    }
+    .mobile-st-footer .m-nav-btn {
+      flex: 1;
+      min-height: 48px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 15.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1.5px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text);
+      transition: filter 0.18s ease, transform 0.15s ease;
+    }
+    .mobile-st-footer .m-nav-btn.primary {
+      background: var(--theme);
+      color: #fff;
+      border-color: var(--theme);
+    }
+    .mobile-st-footer .m-nav-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    /* Mobile Station Drawer Modal */
+    .st-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 260;
+      background: rgba(13, 19, 33, 0.52);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .st-drawer-overlay.open {
+      display: flex;
+      animation: fadeSlide 0.2s ease;
+    }
+    .st-drawer-sheet {
+      width: 100%;
+      max-width: 560px;
+      max-height: 80vh;
+      background: var(--card);
+      border-radius: 22px 22px 0 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 -10px 34px rgba(0, 0, 0, 0.25);
+    }
+    .st-drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .st-drawer-title {
+      font-family: 'Baloo Bhaijaan 2', 'Cairo', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--theme);
+    }
+    .st-drawer-list {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 2px 0;
+    }
+
+    @media (min-width: 900px) and (max-width: 1060px) {
+      .lesson-shell {
+        grid-template-columns: 235px minmax(0, 1fr);
+        gap: 18px;
+      }
+    }
+
+    /* Mobile / Tablet Breakpoint (< 900px) */
+    @media (max-width: 899px) {
+      .station-sidebar {
+        display: none;
+      }
+      .mobile-st-bar {
+        display: block;
+      }
+      .lesson-shell {
+        display: block;
+        max-width: 760px;
+        margin: 14px auto 0;
+        padding: 0 12px 98px;
+      }
+      .st-inline-nav {
+        display: none;
+      }
+      body:not([data-view="home"]) .mobile-st-footer {
+        display: flex;
+      }
+      .toast {
+        bottom: 80px;
+      }
+    }
+
   </style>
 </head>
 <body data-view="home">
@@ -1779,7 +2222,7 @@
             </div>
             <div class="lc-prog-track"><div class="lc-prog-fill" id="home-bar-lesson1"></div></div>
           </div>
-          <button type="button" class="lc-cta" id="home-cta-lesson1" onclick="event.stopPropagation(); navigateTo('lesson1')">ابدأ المذاكرة ◀</button>
+          <button type="button" class="lc-cta" id="home-cta-lesson1" onclick="event.stopPropagation(); if(window.SFX) SFX.click(); navigateTo('lesson1')">ابدأ المذاكرة ◀</button>
         </article>
 
         <!-- Lesson 2 Card -->
@@ -1805,7 +2248,7 @@
             </div>
             <div class="lc-prog-track"><div class="lc-prog-fill" id="home-bar-lesson2"></div></div>
           </div>
-          <button type="button" class="lc-cta" id="home-cta-lesson2" onclick="event.stopPropagation(); navigateTo('lesson2')">ابدأ المذاكرة ◀</button>
+          <button type="button" class="lc-cta" id="home-cta-lesson2" onclick="event.stopPropagation(); if(window.SFX) SFX.click(); navigateTo('lesson2')">ابدأ المذاكرة ◀</button>
         </article>
 
         <!-- Lesson 3 Card -->
@@ -1833,7 +2276,7 @@
             </div>
             <div class="lc-prog-track"><div class="lc-prog-fill" id="home-bar-lesson3"></div></div>
           </div>
-          <button type="button" class="lc-cta" id="home-cta-lesson3" onclick="event.stopPropagation(); navigateTo('lesson3')">ابدأ المذاكرة ◀</button>
+          <button type="button" class="lc-cta" id="home-cta-lesson3" onclick="event.stopPropagation(); if(window.SFX) SFX.click(); navigateTo('lesson3')">ابدأ المذاكرة ◀</button>
         </article>
       </div>
 
@@ -3585,6 +4028,27 @@
 
   <!-- SHARED FLOATING DICTIONARY POPOVER (Fix #2) -->
   <div class="dict-popover" id="dictPopover" role="dialog" aria-label="قاموس المفردات"></div>
+
+
+  <!-- SHARED MOBILE FIXED BOTTOM PREV/NEXT BAR (<900px) -->
+  <div class="mobile-st-footer" id="mobileStFooter" role="navigation" aria-label="التنقل بين محطات الدرس">
+    <button type="button" class="m-nav-btn" id="mobilePrevBtn" onclick="stepStation(-1)">➡️ السابق</button>
+    <button type="button" class="m-nav-btn primary" id="mobileNextBtn" onclick="stepStation(1)">التالي ⬅️</button>
+  </div>
+
+  <!-- SHARED MOBILE STATION DRAWER (<900px) -->
+  <div class="st-drawer-overlay" id="stDrawerOverlay" role="dialog" aria-modal="true" aria-label="قائمة محطات الدرس" onclick="if(event.target===this) closeStationDrawer()">
+    <div class="st-drawer-sheet">
+      <div class="st-drawer-head">
+        <div class="st-drawer-title" id="stDrawerTitle">محطات الدرس</div>
+        <button type="button" class="icon-btn" onclick="if(window.SFX) SFX.click(); closeStationDrawer()" aria-label="إغلاق القائمة">✖</button>
+      </div>
+      <div class="st-drawer-list" id="stDrawerList"></div>
+      <div style="padding-top:8px; border-top:1.5px solid var(--border);">
+        <button type="button" class="st-restart-btn" onclick="if(window.SFX) SFX.click(); restartCurrentLessonStations(); closeStationDrawer();">🔄 ابدأ من الأول (المحطة ١)</button>
+      </div>
+    </div>
+  </div>
 
   <!-- TOAST -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -7100,6 +7564,7 @@
       let audioCtx = null;
       let lastSpecialTs = 0;
       let lastXpTs = 0;
+      let lastClickTs = 0;
       let gradingDepth = 0;
 
       // Load saved preference safely inside try/catch
@@ -7164,6 +7629,9 @@
         click() {
           const ctx = getCtx();
           if (!ctx) return;
+          const nowMs = performance.now();
+          if (nowMs - lastClickTs < 65) return;
+          lastClickTs = nowMs;
           playTone(ctx, 640, 0, 0.045, "sine", 0.052, 430);
         },
 
@@ -7482,6 +7950,685 @@
         if (performance.now() - lastSpecialTs < 95) return;
         SFX.click();
       }, false);
+    })();
+
+  
+    /* ==============================================================
+       14. STATION SYSTEM ENGINE (PHASE 1 — LOSSLESS DOM STATIONS)
+       ============================================================== */
+    (function initStationSystem() {
+      const ST_STORE_KEY = "arabic_prep1_unit1_stations_v1";
+      let stState = {
+        lastStation: { lesson1: 0, lesson2: 0, lesson3: 0 },
+        visited: { lesson1: {}, lesson2: {}, lesson3: {} },
+        attemptedDone: { lesson1: {}, lesson2: {}, lesson3: {} }
+      };
+
+      function loadStState() {
+        try {
+          const raw = localStorage.getItem(ST_STORE_KEY);
+          if (raw) {
+            const p = JSON.parse(raw);
+            ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+              if (p.lastStation && typeof p.lastStation[lk] === "number") stState.lastStation[lk] = p.lastStation[lk];
+              if (p.visited && p.visited[lk]) stState.visited[lk] = p.visited[lk];
+              if (p.attemptedDone && p.attemptedDone[lk]) stState.attemptedDone[lk] = p.attemptedDone[lk];
+            });
+          }
+        } catch (e) {}
+      }
+
+      function saveStState() {
+        try {
+          localStorage.setItem(ST_STORE_KEY, JSON.stringify(stState));
+        } catch (e) {}
+      }
+
+      loadStState();
+
+      // Track questions exhausted after 2 wrong attempts (so station ✓ still works without granting XP!)
+      function wrapExhaustTracker(fnName, getIds) {
+        const orig = window[fnName];
+        if (typeof orig !== "function") return;
+        window[fnName] = function() {
+          const res = orig.apply(this, arguments);
+          try {
+            const info = getIds.apply(null, arguments);
+            if (!info) return res;
+            const fb = document.getElementById(info.fbId);
+            if (fb && fb.classList.contains("err")) {
+              stState.attemptedDone[info.lk][info.qid] = true;
+              saveStState();
+              if (typeof window.refreshStationCheckmarks === "function") window.refreshStationCheckmarks();
+            }
+          } catch (e) {}
+          return res;
+        };
+      }
+
+      wrapExhaustTracker("checkMCQ", (lk, id) => ({ lk, qid: id, fbId: "fb_" + id }));
+      wrapExhaustTracker("checkTF", (lk, id) => ({ lk, qid: id, fbId: "fb_" + id }));
+      wrapExhaustTracker("checkFill", (lk, id) => ({ lk, qid: id, fbId: "fb_" + id }));
+      wrapExhaustTracker("pickMistake", (lk, id) => ({ lk, qid: id, fbId: "fb_" + id }));
+      wrapExhaustTracker("checkTimeline", () => ({ lk: "lesson1", qid: "timeline", fbId: "timelineFeedback" }));
+      wrapExhaustTracker("checkL2Timeline", () => ({ lk: "lesson2", qid: "l2_timeline", fbId: "l2TimelineFeedback" }));
+      wrapExhaustTracker("checkL2Sort", () => ({ lk: "lesson2", qid: "l2_sort_concept", fbId: "l2SortFeedback" }));
+      wrapExhaustTracker("checkL3Sort", () => ({ lk: "lesson3", qid: "l3_sort_pp", fbId: "l3SortFeedback" }));
+      wrapExhaustTracker("checkL2VocabTable", () => ({ lk: "lesson2", qid: "l2_vocab_table", fbId: "l2VocabTableFb" }));
+      wrapExhaustTracker("checkL3VocabTable", () => ({ lk: "lesson3", qid: "l3_vocab_table", fbId: "l3VocabTableFb" }));
+
+      // Keep CSS --topbar-h synced with actual sticky header height
+      function syncTopbarHeight() {
+        const tb = document.querySelector(".topbar");
+        if (tb) {
+          document.documentElement.style.setProperty("--topbar-h", tb.offsetHeight + "px");
+        }
+      }
+      syncTopbarHeight();
+      window.addEventListener("resize", syncTopbarHeight);
+
+      // Helper: create a card wrapper with a clean section header
+      function makeSubCard(titleText, badgeText) {
+        const sec = document.createElement("section");
+        sec.className = "card";
+        if (titleText) {
+          const head = document.createElement("div");
+          head.className = "section-head";
+          head.innerHTML = `<h2 class="section-title">${titleText}</h2>` +
+            (badgeText ? `<span class="badge badge-book">${badgeText}</span>` : "");
+          sec.appendChild(head);
+        }
+        return sec;
+      }
+
+      // Helper: collect all interactive question IDs inside a station's DOM elements
+      function collectQuestionIds(panelEl, extraIds) {
+        const ids = new Set(extraIds || []);
+        panelEl.querySelectorAll('.q-item[id^="card_"]').forEach(el => {
+          ids.add(el.id.replace(/^card_/, ""));
+        });
+        return [...ids];
+      }
+
+      const LESSON_STATIONS = { lesson1: [], lesson2: [], lesson3: [] };
+      const LESSON_UI = {};
+
+      // ========================================================
+      // BUILD STATIONS BY REORGANIZING EXISTING LIVE DOM NODES
+      // ========================================================
+      function buildLesson1Stations() {
+        const view = document.getElementById("view-lesson1");
+        const main = view.querySelector("main.container");
+        const hero = main.querySelector("section.hero");
+        const hook = document.getElementById("l1-hook");
+        const goals = document.getElementById("l1-goals");
+        const textSec = document.getElementById("l1-text");
+        const timeline = document.getElementById("l1-timeline");
+        const analysis = document.getElementById("l1-analysis");
+        const exercises = document.getElementById("l1-exercises");
+        const mistakes = document.getElementById("l1-mistakes");
+        const summary = document.getElementById("l1-summary");
+        const quiz = document.getElementById("l1-quiz");
+        const pager = main.querySelector("nav.lesson-pager");
+        const footer = main.querySelector("footer.source-footer");
+
+        // Extract children of #l1-text cleanly without losing any node or listener
+        const textChildren = [...textSec.children];
+        // [0]=section-head, [1]=tip+tts bar, [2]=#para1, [3]=#para2, [4]=#para3, [5]=sentenceLab wrapper, [6]=whatIf wrapper
+        const tipBar = textChildren[1];
+        const para1 = document.getElementById("para1");
+        const para2 = document.getElementById("para2");
+        const para3 = document.getElementById("para3");
+        const labWrap = document.getElementById("sentenceLabL1").parentElement;
+        const whatIfWrap = document.getElementById("whatIfInput").parentElement;
+
+        const cP1 = makeSubCard("📖 النص المقرر — الفقرة ١", "📘 ص ٢٥");
+        cP1.appendChild(tipBar);
+        cP1.appendChild(para1);
+
+        const cP2 = makeSubCard("📖 النص المقرر — الفقرة ٢", "📘 ص ٢٥");
+        cP2.appendChild(para2);
+
+        const cP3 = makeSubCard("📖 النص المقرر — الفقرة ٣", "📘 ص ٢٥");
+        cP3.appendChild(para3);
+
+        const cLab = makeSubCard("🔬 مختبر الجملة + سؤال «ماذا لو؟»", "📘 ص ٢٥، ٢٨");
+        labWrap.style.marginTop = "0";
+        labWrap.style.paddingTop = "0";
+        labWrap.style.borderTop = "none";
+        cLab.appendChild(labWrap);
+        cLab.appendChild(whatIfWrap);
+
+        // Split #exercisesContainer (6 groups) into two stations: (1-3) and (4-6 + p.29 notice)
+        const exGroups = [...document.querySelectorAll("#exercisesContainer > .q-group")];
+        const exNote29 = exercises.children[exercises.children.length - 1];
+        const exIntro = exercises.querySelector("p");
+
+        const cEx1 = makeSubCard("✍️ تدريبات الكتاب (١): س١ – س٣", "📘 ص ٢٧");
+        if (exIntro) cEx1.appendChild(exIntro);
+        exGroups.slice(0, 3).forEach(g => cEx1.appendChild(g));
+
+        const cEx2 = makeSubCard("✍️ تدريبات الكتاب (٢): س٤ – س٦", "📘 ص ٢٨ – ٢٩");
+        exGroups.slice(3).forEach(g => cEx2.appendChild(g));
+        if (exNote29 && exNote29.id !== "exercisesContainer") cEx2.appendChild(exNote29);
+
+        return [
+          { title: "البداية والأهداف", nodes: [hero, hook, goals], extraIds: ["hook"] },
+          { title: "الفقرة ١: الميدالية", nodes: [cP1], extraIds: ["idea_idea1"] },
+          { title: "الفقرة ٢: الفمتوثانية", nodes: [cP2], extraIds: ["idea_idea2"] },
+          { title: "الفقرة ٣: أمجاد وآمال", nodes: [cP3], extraIds: ["idea_idea3"] },
+          { title: "مختبر الجملة وماذا لو؟", nodes: [cLab], extraIds: ["lab_try", "whatif"] },
+          { title: "خريطة الأحداث", nodes: [timeline], extraIds: ["timeline"] },
+          { title: "تحليل النص", nodes: [analysis], reviewOnly: true },
+          { title: "تدريبات (١): س١–س٣", nodes: [cEx1] },
+          { title: "تدريبات (٢): س٤–س٦", nodes: [cEx2] },
+          { title: "اكتشف الغلطة", nodes: [mistakes] },
+          { title: "الخريطة والبطاقات", nodes: [summary], reviewOnly: true },
+          { title: "الميني كويز", nodes: [quiz, pager, footer] }
+        ];
+      }
+
+      function buildLesson2Stations() {
+        const view = document.getElementById("view-lesson2");
+        const main = view.querySelector("main.container");
+        const hero = main.querySelector("section.hero");
+        const hook = document.getElementById("l2-hook");
+        const goals = document.getElementById("l2-goals");
+        const textSec = document.getElementById("l2-text");
+        const timeline = document.getElementById("l2-timeline");
+        const analysis = document.getElementById("l2-analysis");
+        const expr = document.getElementById("l2-expr");
+        const concept = document.getElementById("l2-concept");
+        const vocabTbl = document.getElementById("l2-vocab-table");
+        const exercises = document.getElementById("l2-exercises");
+        const freeText = document.getElementById("l2-free-text");
+        const exam = document.getElementById("l2-exam");
+        const mistakes = document.getElementById("l2-mistakes");
+        const summary = document.getElementById("l2-summary");
+        const quiz = document.getElementById("l2-quiz");
+        const pager = main.querySelector("nav.lesson-pager");
+        const footer = main.querySelector("footer.source-footer");
+
+        // Extract #l2-text children
+        const textKids = [...textSec.children];
+        // [0]=section-head, [1]=مضمون النص, [2]=tip+TTS, [3]=pred1, [4]=para1, [5]=pred2, [6]=para2, [7]=pred3, [8]=para3, [9]=pred4, [10]=para4
+        const contentNote = textKids[1];
+        const tipBar = textKids[2];
+        const predBoxes = [...textSec.querySelectorAll(".predict-box")];
+        const p1 = document.getElementById("l2-para1");
+        const p2 = document.getElementById("l2-para2");
+        const p3 = document.getElementById("l2-para3");
+        const p4 = document.getElementById("l2-para4");
+
+        const cP1 = makeSubCard("📖 النص — الفقرة ١: المولد والنشأة", "📘 ص ٣١");
+        cP1.appendChild(contentNote);
+        cP1.appendChild(tipBar);
+        if (predBoxes[0]) cP1.appendChild(predBoxes[0]);
+        cP1.appendChild(p1);
+
+        const cP2 = makeSubCard("📖 النص — الفقرة ٢: إنسانية منسي", "📘 ص ٣٢");
+        if (predBoxes[1]) cP2.appendChild(predBoxes[1]);
+        cP2.appendChild(p2);
+
+        const cP3 = makeSubCard("📖 النص — الفقرة ٣: بطولات سيناء", "📘 ص ٣٢");
+        if (predBoxes[2]) cP3.appendChild(predBoxes[2]);
+        cP3.appendChild(p3);
+
+        const cP4 = makeSubCard("📖 النص — الفقرة ٤: ملحمة البرث", "📘 ص ٣٣");
+        if (predBoxes[3]) cP4.appendChild(predBoxes[3]);
+        cP4.appendChild(p4);
+
+        // Split #l2ExercisesContainer (8 groups) into 3 bite-sized stations
+        const exGroups = [...document.querySelectorAll("#l2ExercisesContainer > .q-group")];
+        const exIntro = exercises.querySelector("p");
+
+        const cEx1 = makeSubCard("✍️ تدريبات (١): فكّر وطبّق", "📘 ص ٣٨ – ٣٩");
+        if (exIntro) cEx1.appendChild(exIntro);
+        exGroups.slice(0, 2).forEach(g => cEx1.appendChild(g));
+
+        const cEx2 = makeSubCard("✍️ تدريبات (٢): أسئلة الفقرات س١ – س٣", "📘 ص ٣٩ – ٤١");
+        exGroups.slice(2, 5).forEach(g => cEx2.appendChild(g));
+
+        const cEx3 = makeSubCard("✍️ تدريبات (٣): أسئلة الفقرات س٤ – س٦", "📘 ص ٤١ – ٤٣");
+        exGroups.slice(5).forEach(g => cEx3.appendChild(g));
+
+        return [
+          { title: "البداية والأهداف", nodes: [hero, hook, goals], extraIds: ["l2_hook"] },
+          { title: "الفقرة ١: المولد والنشأة", nodes: [cP1], extraIds: ["l2_pred1", "idea_l2-idea1"] },
+          { title: "الفقرة ٢: إنسانية منسي", nodes: [cP2], extraIds: ["l2_pred2", "idea_l2-idea2"] },
+          { title: "الفقرة ٣: بطولات سيناء", nodes: [cP3], extraIds: ["l2_pred3", "idea_l2-idea3"] },
+          { title: "الفقرة ٤: ملحمة البرث", nodes: [cP4], extraIds: ["l2_pred4", "idea_l2-idea4"] },
+          { title: "الخط الزمني", nodes: [timeline], extraIds: ["l2_timeline"] },
+          { title: "تحليل النص", nodes: [analysis], reviewOnly: true },
+          { title: "التعبيرات والقيم", nodes: [expr], reviewOnly: true },
+          { title: "المفاهيم الأدبية", nodes: [concept], extraIds: ["l2_sort_concept"] },
+          { title: "جدول المفردات", nodes: [vocabTbl], extraIds: ["l2_vocab_table"] },
+          { title: "تدريبات (١): فكّر وطبّق", nodes: [cEx1] },
+          { title: "تدريبات (٢): س١–س٣", nodes: [cEx2] },
+          { title: "تدريبات (٣): س٤–س٦", nodes: [cEx3] },
+          { title: "النص المتحرر", nodes: [freeText] },
+          { title: "امتحان الوزارة والنحو", nodes: [exam] },
+          { title: "اكتشف الغلطة", nodes: [mistakes] },
+          { title: "الخريطة والبطاقات", nodes: [summary], reviewOnly: true },
+          { title: "الميني كويز", nodes: [quiz, pager, footer] }
+        ];
+      }
+
+      function buildLesson3Stations() {
+        const view = document.getElementById("view-lesson3");
+        const main = view.querySelector("main.container");
+        const hero = main.querySelector("section.hero");
+        const hook = document.getElementById("l3-hook");
+        const goals = document.getElementById("l3-goals");
+        const textSec = document.getElementById("l3-text");
+        const traits = document.getElementById("l3-traits");
+        const pastPres = document.getElementById("l3-past-present");
+        const analysis = document.getElementById("l3-analysis");
+        const expr = document.getElementById("l3-expr");
+        const vocabTbl = document.getElementById("l3-vocab-table");
+        const exercises = document.getElementById("l3-exercises");
+        const diagram = document.getElementById("l3-diagram");
+        const mistakes = document.getElementById("l3-mistakes");
+        const summary = document.getElementById("l3-summary");
+        const quiz = document.getElementById("l3-quiz");
+        const pager = main.querySelector("nav.lesson-pager");
+        const footer = main.querySelector("footer.source-footer");
+
+        const textKids = [...textSec.children];
+        const contentNote = textKids[1];
+        const tipBar = textKids[2];
+        const p1 = document.getElementById("l3-para1");
+        const p2 = document.getElementById("l3-para2");
+        const p3 = document.getElementById("l3-para3");
+        const p4 = document.getElementById("l3-para4");
+        const labWrap = document.getElementById("sentenceLabL3").parentElement;
+
+        const cP1 = makeSubCard("📖 النص — الفقرة ١: نبع الأصالة", "📘 ص ٤٧");
+        cP1.appendChild(contentNote);
+        cP1.appendChild(tipBar);
+        cP1.appendChild(p1);
+
+        const cP2 = makeSubCard("📖 النص — الفقرة ٢: شموخ الفضائل", "📘 ص ٤٧ – ٤٨");
+        cP2.appendChild(p2);
+
+        const cP3 = makeSubCard("📖 النص — الفقرة ٣: وادي النيل", "📘 ص ٤٨ – ٤٩");
+        cP3.appendChild(p3);
+
+        const cP4 = makeSubCard("📖 النص — الفقرة ٤ + مختبر الجملة", "📘 ص ٤٩");
+        cP4.appendChild(p4);
+        cP4.appendChild(labWrap);
+
+        // Split #l3ExercisesContainer (2 groups) into 2 focused stations
+        const exGroups = [...document.querySelectorAll("#l3ExercisesContainer > .q-group")];
+        const exIntro = exercises.querySelector("p");
+
+        const cEx1 = makeSubCard("✍️ تدريبات (١): صح وخطأ", "📘 ص ٥٣");
+        if (exIntro) cEx1.appendChild(exIntro);
+        if (exGroups[0]) cEx1.appendChild(exGroups[0]);
+
+        const cEx2 = makeSubCard("✍️ تدريبات (٢): اختر الصواب", "📘 ص ٥٤");
+        if (exGroups[1]) cEx2.appendChild(exGroups[1]);
+
+        return [
+          { title: "البداية والأهداف", nodes: [hero, hook, goals], extraIds: ["l3_hook"] },
+          { title: "الفقرة ١: نبع الأصالة", nodes: [cP1], extraIds: ["idea_l3-idea1"] },
+          { title: "الفقرة ٢: شموخ الفضائل", nodes: [cP2], extraIds: ["idea_l3-idea2"] },
+          { title: "الفقرة ٣: وادي النيل", nodes: [cP3], extraIds: ["idea_l3-idea3"] },
+          { title: "الفقرة ٤ ومختبر الجملة", nodes: [cP4], extraIds: ["idea_l3-idea4"] },
+          { title: "الصفات والتوصيل", nodes: [traits], extraIds: ["l3_match_all"] },
+          { title: "الماضي والحاضر", nodes: [pastPres], extraIds: ["l3_sort_pp"] },
+          { title: "تحليل النص", nodes: [analysis], reviewOnly: true },
+          { title: "التعبيرات والقيم", nodes: [expr], reviewOnly: true },
+          { title: "جدول المفردات", nodes: [vocabTbl], extraIds: ["l3_vocab_table"] },
+          { title: "تدريبات: صح وخطأ", nodes: [cEx1] },
+          { title: "تدريبات: اختر الصواب", nodes: [cEx2] },
+          { title: "مخطط الصفات", nodes: [diagram], extraIds: ["l3_diagram"] },
+          { title: "اكتشف الغلطة", nodes: [mistakes] },
+          { title: "الخريطة والبطاقات", nodes: [summary], reviewOnly: true },
+          { title: "الميني كويز", nodes: [quiz, pager, footer] }
+        ];
+      }
+
+      // Mount stations shell inside each lesson view
+      function mountLessonStations(lessonKey, specs) {
+        const view = document.getElementById("view-" + lessonKey);
+        const oldMain = view.querySelector("main.container");
+
+        // Create mobile top station strip
+        const mobileBar = document.createElement("div");
+        mobileBar.className = "mobile-st-bar";
+        mobileBar.innerHTML = `
+          <button type="button" class="mobile-st-trigger" id="mobTrigger-${lessonKey}" onclick="if(window.SFX) SFX.click(); openStationDrawer('${lessonKey}')" aria-haspopup="dialog">
+            <div class="mobile-st-row">
+              <span class="mobile-st-title" id="mobTitle-${lessonKey}"></span>
+              <span class="mobile-st-badge"><span id="mobCount-${lessonKey}"></span> · المحطات ▾</span>
+            </div>
+            <div class="mobile-st-dots" id="mobDots-${lessonKey}"></div>
+          </button>
+        `;
+
+        // Create 2-column lesson shell (Right sticky sidebar + Main column)
+        const shell = document.createElement("div");
+        shell.className = "lesson-shell";
+
+        const sidebar = document.createElement("aside");
+        sidebar.className = "station-sidebar";
+        sidebar.setAttribute("aria-label", "محطات الدرس");
+        sidebar.innerHTML = `
+          <div class="st-side-head">
+            <span>محطات الدرس</span>
+            <span class="st-side-count" id="sideDone-${lessonKey}">0 / ${specs.length}</span>
+          </div>
+          <div class="st-side-list" id="sideList-${lessonKey}"></div>
+          <div class="st-side-foot">
+            <button type="button" class="st-restart-btn" onclick="if(window.SFX) SFX.click(); restartLessonStations('${lessonKey}')">🔄 ابدأ من الأول</button>
+          </div>
+        `;
+
+        const mainCol = document.createElement("div");
+        mainCol.className = "station-main";
+
+        // Resume banner (shown whenever student is on station > 0)
+        const resumeBar = document.createElement("div");
+        resumeBar.className = "st-resume-bar";
+        resumeBar.id = "resumeBar-" + lessonKey;
+        resumeBar.innerHTML = `
+          <span id="resumeText-${lessonKey}"></span>
+          <button type="button" class="btn btn-soft" style="min-height:44px; padding:6px 14px; font-size:14px;" onclick="if(window.SFX) SFX.click(); restartLessonStations('${lessonKey}')">🔄 ابدأ من الأول</button>
+        `;
+        mainCol.appendChild(resumeBar);
+
+        const panels = [];
+        specs.forEach((spec, idx) => {
+          const panel = document.createElement("div");
+          panel.className = "station-panel";
+          panel.dataset.lesson = lessonKey;
+          panel.dataset.station = String(idx);
+          spec.nodes.forEach(node => {
+            if (node) panel.appendChild(node);
+          });
+
+          // Inline bottom Prev / Next navigation inside every station (desktop)
+          const nav = document.createElement("div");
+          nav.className = "st-inline-nav";
+          const isFirst = idx === 0;
+          const isLast = idx === specs.length - 1;
+          nav.innerHTML = `
+            <button type="button" class="btn btn-soft" ${isFirst ? "disabled" : ""} onclick="if(window.SFX) SFX.click(); goToStation('${lessonKey}', ${idx - 1}, true)">➡️ السابق</button>
+            <div class="st-inline-status">محطة ${idx + 1} من ${specs.length}</div>
+            <button type="button" class="btn btn-primary" ${isLast ? "disabled" : ""} onclick="if(window.SFX) SFX.click(); goToStation('${lessonKey}', ${idx + 1}, true)">التالي ⬅️</button>
+          `;
+          panel.appendChild(nav);
+
+          const requiredIds = collectQuestionIds(panel, spec.extraIds);
+          LESSON_STATIONS[lessonKey].push({
+            idx,
+            title: spec.title,
+            panel,
+            requiredIds,
+            reviewOnly: !!spec.reviewOnly
+          });
+          panels.push(panel);
+          mainCol.appendChild(panel);
+        });
+
+        shell.appendChild(sidebar);
+        shell.appendChild(mainCol);
+
+        // Replace oldMain with mobileBar + shell (now oldMain only contains empty skeleton containers)
+        view.insertBefore(mobileBar, oldMain);
+        view.insertBefore(shell, oldMain);
+        oldMain.remove();
+
+        // Populate sidebar list & mobile dots
+        const sideList = document.getElementById("sideList-" + lessonKey);
+        const mobDots = document.getElementById("mobDots-" + lessonKey);
+
+        LESSON_STATIONS[lessonKey].forEach(st => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "st-nav-item";
+          btn.dataset.stIdx = String(st.idx);
+          btn.innerHTML = `
+            <span class="st-nav-left">
+              <span class="st-nav-num">${st.idx + 1}</span>
+              <span class="st-nav-label">${st.title}</span>
+            </span>
+            <span class="st-check" aria-label="مكتملة">✓</span>
+          `;
+          btn.addEventListener("click", () => {
+            if (window.SFX) SFX.click();
+            goToStation(lessonKey, st.idx, true);
+          });
+          sideList.appendChild(btn);
+
+          const dot = document.createElement("span");
+          dot.className = "st-dot";
+          dot.dataset.stIdx = String(st.idx);
+          mobDots.appendChild(dot);
+        });
+
+        LESSON_UI[lessonKey] = { shell, sidebar, mainCol, sideList, mobDots };
+      }
+
+      // Check if a station is completed (✓)
+      function isStationComplete(lessonKey, st) {
+        const ls = getLessonState(lessonKey);
+        const att = stState.attemptedDone[lessonKey] || {};
+        if (st.requiredIds.length > 0) {
+          return st.requiredIds.every(id => !!ls.solved[id] || !!att[id]);
+        }
+        return !!(stState.visited[lessonKey] && stState.visited[lessonKey][st.idx]);
+      }
+
+      function refreshStationCheckmarks(lessonKey) {
+        const keys = lessonKey ? [lessonKey] : ["lesson1", "lesson2", "lesson3"];
+        keys.forEach(lk => {
+          const list = LESSON_STATIONS[lk];
+          if (!list || !list.length) return;
+          const activeIdx = Math.max(0, Math.min(list.length - 1, stState.lastStation[lk] || 0));
+          let doneTotal = 0;
+
+          const sideBtns = document.querySelectorAll(`#sideList-${lk} .st-nav-item`);
+          const dots = document.querySelectorAll(`#mobDots-${lk} .st-dot`);
+
+          list.forEach((st, i) => {
+            const done = isStationComplete(lk, st);
+            if (done) doneTotal++;
+            if (sideBtns[i]) {
+              sideBtns[i].classList.toggle("done", done);
+              sideBtns[i].classList.toggle("active", i === activeIdx);
+            }
+            if (dots[i]) {
+              dots[i].classList.toggle("done", done);
+              dots[i].classList.toggle("active", i === activeIdx);
+            }
+          });
+
+          const sideDoneEl = document.getElementById("sideDone-" + lk);
+          if (sideDoneEl) sideDoneEl.textContent = `${doneTotal} / ${list.length}`;
+
+          // Update mobile top bar text
+          const cur = list[activeIdx];
+          const mobTitle = document.getElementById("mobTitle-" + lk);
+          const mobCount = document.getElementById("mobCount-" + lk);
+          if (mobTitle && cur) mobTitle.textContent = `${activeIdx + 1}. ${cur.title}`;
+          if (mobCount) mobCount.textContent = `${activeIdx + 1} / ${list.length}`;
+
+          // Update mobile fixed bottom Prev / Next buttons if this lesson is active
+          if (currentView === lk) {
+            const prevBtn = document.getElementById("mobilePrevBtn");
+            const nextBtn = document.getElementById("mobileNextBtn");
+            if (prevBtn) prevBtn.disabled = activeIdx <= 0;
+            if (nextBtn) {
+              nextBtn.disabled = activeIdx >= list.length - 1;
+              nextBtn.textContent = activeIdx >= list.length - 1 ? "آخر محطة ✓" : "التالي ⬅️";
+            }
+          }
+        });
+      }
+      window.refreshStationCheckmarks = refreshStationCheckmarks;
+
+      // Navigate to a specific station inside a lesson
+      function goToStation(lessonKey, targetIdx, smoothScroll) {
+        const list = LESSON_STATIONS[lessonKey];
+        if (!list || !list.length) return;
+
+        // If leaving a review-only station (like Summary / Analysis / Expressions), mark it reviewed
+        const prevIdx = stState.lastStation[lessonKey] || 0;
+        if (prevIdx !== targetIdx && list[prevIdx] && list[prevIdx].reviewOnly) {
+          stState.visited[lessonKey][prevIdx] = true;
+        }
+
+        const idx = Math.max(0, Math.min(list.length - 1, targetIdx));
+        closeDictPopover();
+        if ("speechSynthesis" in window && window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+        }
+
+        list.forEach((st, i) => {
+          st.panel.classList.toggle("active", i === idx);
+        });
+
+        stState.lastStation[lessonKey] = idx;
+        saveStState();
+
+        // Update resume bar visibility (shown on any station > 0 so student always has "ابدأ من الأول")
+        const rb = document.getElementById("resumeBar-" + lessonKey);
+        const rt = document.getElementById("resumeText-" + lessonKey);
+        if (rb && rt) {
+          if (idx > 0) {
+            rt.textContent = `📍 المحطة ${idx + 1} من ${list.length}: ${list[idx].title}`;
+            rb.classList.add("show");
+          } else {
+            rb.classList.remove("show");
+          }
+        }
+
+        refreshStationCheckmarks(lessonKey);
+
+        // Keep active sidebar button scrolled into view inside sidebar
+        const activeSideBtn = document.querySelector(`#sideList-${lessonKey} .st-nav-item.active`);
+        if (activeSideBtn && activeSideBtn.scrollIntoView) {
+          try { activeSideBtn.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) {}
+        }
+
+        // Scroll smoothly to top of the new station
+        window.scrollTo({ top: 0, behavior: smoothScroll ? "smooth" : "auto" });
+      }
+      window.goToStation = goToStation;
+
+      window.stepStation = function(delta) {
+        if (currentView !== "lesson1" && currentView !== "lesson2" && currentView !== "lesson3") return;
+        const curIdx = stState.lastStation[currentView] || 0;
+        if (window.SFX) SFX.click();
+        goToStation(currentView, curIdx + delta, true);
+      };
+
+      window.restartLessonStations = function(lessonKey) {
+        goToStation(lessonKey, 0, true);
+      };
+
+      window.restartCurrentLessonStations = function() {
+        if (currentView === "lesson1" || currentView === "lesson2" || currentView === "lesson3") {
+          goToStation(currentView, 0, true);
+        }
+      };
+
+      // Mobile Station Drawer open/close
+      window.openStationDrawer = function(lessonKey) {
+        const list = LESSON_STATIONS[lessonKey];
+        if (!list) return;
+        const overlay = document.getElementById("stDrawerOverlay");
+        const titleEl = document.getElementById("stDrawerTitle");
+        const listEl = document.getElementById("stDrawerList");
+        const activeIdx = stState.lastStation[lessonKey] || 0;
+
+        titleEl.textContent = `محطات ${(LESSONS_META[lessonKey] && LESSONS_META[lessonKey].title) || "الدرس"}`;
+        listEl.innerHTML = "";
+        list.forEach((st, i) => {
+          const done = isStationComplete(lessonKey, st);
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "st-nav-item" + (i === activeIdx ? " active" : "") + (done ? " done" : "");
+          btn.innerHTML = `
+            <span class="st-nav-left">
+              <span class="st-nav-num">${i + 1}</span>
+              <span class="st-nav-label">${st.title}</span>
+            </span>
+            <span class="st-check" aria-label="مكتملة">✓</span>
+          `;
+          btn.addEventListener("click", () => {
+            if (window.SFX) SFX.click();
+            closeStationDrawer();
+            goToStation(lessonKey, i, true);
+          });
+          listEl.appendChild(btn);
+        });
+        overlay.classList.add("open");
+      };
+
+      window.closeStationDrawer = function() {
+        const overlay = document.getElementById("stDrawerOverlay");
+        if (overlay) overlay.classList.remove("open");
+      };
+
+      // Hook applyView so opening a lesson restores its saved station and refreshes UI
+      const _origApplyView = window.applyView;
+      window.applyView = function(viewName) {
+        closeStationDrawer();
+        const res = _origApplyView.apply(this, arguments);
+        syncTopbarHeight();
+        if (viewName === "lesson1" || viewName === "lesson2" || viewName === "lesson3") {
+          const savedIdx = stState.lastStation[viewName] || 0;
+          goToStation(viewName, savedIdx, false);
+        }
+        return res;
+      };
+
+      // Hook updateHUD so station checkmarks update live whenever any question is solved!
+      const _origHudForStations = window.updateHUD;
+      window.updateHUD = function() {
+        const res = _origHudForStations.apply(this, arguments);
+        refreshStationCheckmarks();
+        return res;
+      };
+
+      // Detect real progress reset (when resetBtn replaces state.lessons[lk] with a fresh object)
+      const lessonObjRefs = {
+        lesson1: state.lessons.lesson1,
+        lesson2: state.lessons.lesson2,
+        lesson3: state.lessons.lesson3
+      };
+      const _origSaveState = window.saveState;
+      window.saveState = function() {
+        const res = _origSaveState.apply(this, arguments);
+        let changed = false;
+        ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+          if (state.lessons[lk] !== lessonObjRefs[lk]) {
+            lessonObjRefs[lk] = state.lessons[lk];
+            stState.lastStation[lk] = 0;
+            stState.visited[lk] = {};
+            stState.attemptedDone[lk] = {};
+            changed = true;
+          }
+        });
+        if (changed) saveStState();
+        return res;
+      };
+
+      // Build and mount all 3 lessons into stations!
+      mountLessonStations("lesson1", buildLesson1Stations());
+      mountLessonStations("lesson2", buildLesson2Stations());
+      mountLessonStations("lesson3", buildLesson3Stations());
+
+      // Activate initial view cleanly
+      if (currentView === "lesson1" || currentView === "lesson2" || currentView === "lesson3") {
+        goToStation(currentView, stState.lastStation[currentView] || 0, false);
+      } else {
+        refreshStationCheckmarks();
+      }
+      syncTopbarHeight();
     })();
 
   </script>
