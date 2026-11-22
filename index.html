@@ -2298,6 +2298,57 @@
       .res-item { grid-template-columns: 1fr; }
       .res-actions .btn { flex: 1 1 100%; }
     }
+
+    /* ================= FUNCTIONAL COLOR LAYER =================
+       رملي = من الكتاب · لون الدرس الفاتح = نشاط يتفاعل معاه الطالب */
+    :root {
+      --paper: #FBF5E8;
+      --sand: #F3E9D7;
+      --sand-line: #E4D2B0;
+      --tint: #F3F5FA;
+      --tint-2: #E6EAF3;
+    }
+    body[data-view="lesson1"] { --tint: #EEF3FF; --tint-2: #DCE6FF; }
+    body[data-view="lesson2"] { --tint: #FFF3E8; --tint-2: #FFE3CC; }
+    body[data-view="lesson3"] { --tint: #F5EEFF; --tint-2: #EADCFD; }
+    body.dark { --paper: #1E2230; --sand: #2A2E3D; --sand-line: #3B4053; --tint: #1F2535; --tint-2: #283048; }
+    body.dark[data-view="lesson1"] { --tint: #172344; --tint-2: #1F2F5C; }
+    body.dark[data-view="lesson2"] { --tint: #2B1E14; --tint-2: #3D2918; }
+    body.dark[data-view="lesson3"] { --tint: #231A3A; --tint-2: #31234F; }
+
+    /* من الكتاب: ورق رملي */
+    .para-box { background: var(--paper); border-color: var(--sand-line); }
+    .qa-item { border-color: var(--sand-line); }
+    .note-strip { background: var(--paper); border-color: var(--sand-line); }
+    .qa-btn { background: var(--paper); }
+    .dict-word, .dict-term { background: var(--sand); border-bottom-color: var(--theme); }
+    .dict-word:hover, .dict-word:focus, .dict-word.active-word,
+    .dict-term:hover, .dict-term:focus, .dict-term.active-word { background: var(--theme); color: #fff; }
+
+    /* نشاط: لون الدرس الفاتح */
+    .tip-bar { background: var(--tint); color: var(--text); }
+    .predict-box { background: var(--tint); border-color: transparent; border-right: 4px solid var(--theme); }
+    .idea-panel { background: var(--tint); }
+    .q-item {
+      background: var(--tint);
+      border-color: transparent;
+      border-right: 4px solid var(--theme);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .q-item .opt-btn:not(.correct):not(.wrong) { background: var(--card); }
+    .q-item:has(.feedback.ok.show), .q-item:has(.feedback.model.show) { background: var(--success-soft); border-right-color: var(--success); }
+    .q-item:has(.feedback.err.show) { background: var(--error-soft); border-right-color: var(--error); }
+    .expr-card, .value-card { background: var(--tint); border-color: transparent; }
+    .expr-card.revealed, .value-card.revealed { background: var(--card); border-color: var(--theme); }
+    .flip-front { background: var(--tint-2); border-color: transparent; }
+    .st-nav-item.done:not(.active) { background: var(--tint); }
+    .res-stats { background: var(--tint); border-color: transparent; border-radius: var(--radius); }
+
+    /* كروت الرئيسية: لمسة خفيفة من لون كل درس */
+    .lesson-card.c-l1 { background: #F7F9FF; }
+    .lesson-card.c-l2 { background: #FFF9F3; }
+    .lesson-card.c-l3 { background: #FBF7FF; }
+    body.dark .lesson-card.c-l1, body.dark .lesson-card.c-l2, body.dark .lesson-card.c-l3 { background: var(--card); }
   </style>
 </head>
 <body data-view="home">
