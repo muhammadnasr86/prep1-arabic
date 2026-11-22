@@ -2208,6 +2208,96 @@
       }
     }
 
+
+    /* ================= LESSON ILLUSTRATIONS ================= */
+    .lesson-art {
+      background: #FBF6EC;
+      border: 1px solid rgba(27, 34, 54, 0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+      line-height: 0;
+    }
+    .lesson-art svg { display: block; width: 100%; height: 100%; }
+    @media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 1fr) auto; } }
+    .hero-art {
+      width: clamp(200px, 24vw, 280px);
+      aspect-ratio: 3 / 2;
+      border-color: rgba(255, 253, 248, 0.4);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    }
+    .lc-art { aspect-ratio: 2 / 1; margin: -6px 0 2px; }
+    .lc-best {
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 2px;
+    }
+    .lc-best .ph { color: var(--text-muted); }
+
+    /* ================= RESULTS STATION ================= */
+    .res-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+    .res-art { aspect-ratio: 3 / 2; }
+    .res-score-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .res-ring { width: 104px; height: 104px; flex-shrink: 0; }
+    .res-ring circle { fill: none; stroke-width: 9; }
+    .res-ring .trk { stroke: var(--border); }
+    .res-ring .val { stroke: var(--theme); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 0.6s ease; }
+    .res-score {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-size: 44px;
+      line-height: 1.1;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .res-score small { font-size: var(--fs-lg); color: var(--text-muted); font-weight: 600; }
+    .res-msg { font-size: var(--fs-lg); margin: 10px 0 0; color: var(--text); line-height: 1.6; }
+    .res-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 0 0 24px;
+    }
+    .res-stat { padding: 14px 10px; text-align: center; }
+    .res-stat + .res-stat { border-right: 1px solid var(--border); }
+    .res-stat strong { display: block; font-size: var(--fs-lg); color: var(--text); }
+    .res-stat span { font-size: var(--fs-sm); color: var(--text-muted); }
+    .res-sub { font-size: var(--fs-lg); margin: 0 0 6px; font-family: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif; }
+    .res-list { list-style: none; margin: 0 0 24px; padding: 0; }
+    .res-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .res-q { color: var(--text); }
+    .res-a { font-size: var(--fs-sm); color: var(--text-muted); margin-top: 4px; }
+    .res-a strong { color: var(--success); }
+    .res-none { color: var(--text-muted); padding: 12px 0 20px; }
+    .res-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .res-actions .btn { min-height: 46px; }
+    .res-pending { padding: 6px 0 10px; }
+    .res-cta-wrap { margin-top: 22px; display: flex; justify-content: flex-start; }
+    @media (max-width: 899px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-art { width: 100%; max-width: 360px; aspect-ratio: 2 / 1; }
+      .res-head { grid-template-columns: 1fr; }
+      .res-art { max-width: 300px; aspect-ratio: 2 / 1; }
+    }
+    @media (max-width: 480px) {
+      .res-stats { grid-template-columns: 1fr; }
+      .res-stat + .res-stat { border-right: none; border-top: 1px solid var(--border); }
+      .res-item { grid-template-columns: 1fr; }
+      .res-actions .btn { flex: 1 1 100%; }
+    }
   </style>
 </head>
 <body data-view="home">
@@ -2274,18 +2364,15 @@
       <div class="lessons-grid">
         <!-- Lesson 1 Card -->
         <article class="lesson-card c-l1" onclick="navigateTo('lesson1')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('lesson1');}">
+          <div class="lc-art lesson-art" data-art="lesson1"></div>
           <div class="lc-top">
             <div class="lc-meta">
               <span class="lc-num">الدرس الأول · نص استماع</span>
               <h2 class="lc-title">مِصْرُ مَهْدُ العِلْمِ</h2>
               <div class="lc-sub">للدكتور أحمد زويل · ص ٢٤ – ٢٩</div>
+              <div class="lc-best" id="home-best-lesson1" hidden></div>
             </div>
-            <svg class="lc-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(30 32 32)"/>
-              <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(-30 32 32)"/>
-              <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(90 32 32)"/>
-              <circle cx="32" cy="32" r="3"/>
-            </svg>
+            
           </div>
           <p style="margin:0; font-size:var(--fs-md); color:var(--text-muted);">كلمة العالم المصري د. أحمد زويل في حفل جائزة نوبل، وقصة العلم من أرض إيزيس لنظام الفمتوثانية.</p>
           <div class="lc-progress-block">
@@ -2300,16 +2387,15 @@
 
         <!-- Lesson 2 Card -->
         <article class="lesson-card c-l2" onclick="navigateTo('lesson2')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('lesson2');}">
+          <div class="lc-art lesson-art" data-art="lesson2"></div>
           <div class="lc-top">
             <div class="lc-meta">
               <span class="lc-num">الدرس الثاني · نص قراءة</span>
               <h2 class="lc-title">أُسْطُورَةٌ مِصْرِيَّةٌ</h2>
               <div class="lc-sub">البطل أحمد منسي · ص ٣٠ – ٤٥</div>
+              <div class="lc-best" id="home-best-lesson2" hidden></div>
             </div>
-            <svg class="lc-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M32 8 L52 16 V34 C52 46 43 54 32 58 C21 54 12 46 12 34 V16 Z"/>
-              <path d="M32 22 L35 29 L42.5 29.6 L36.8 34.4 L38.6 41.8 L32 37.8 L25.4 41.8 L27.2 34.4 L21.5 29.6 L29 29 Z"/>
-            </svg>
+            
           </div>
           <p style="margin:0; font-size:var(--fs-md); color:var(--text-muted);">سيرة البطل العقيد أركان حرب أحمد صابر منسي، ومواقفه الإنسانية وبطولاته في حماية أرض سيناء.</p>
           <div class="lc-progress-block">
@@ -2324,18 +2410,15 @@
 
         <!-- Lesson 3 Card -->
         <article class="lesson-card c-l3" onclick="navigateTo('lesson3')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('lesson3');}">
+          <div class="lc-art lesson-art" data-art="lesson3"></div>
           <div class="lc-top">
             <div class="lc-meta">
               <span class="lc-num">الدرس الثالث · نص قراءة</span>
               <h2 class="lc-title">رِسَالَةٌ إِلَى المَرْأَةِ المِصْرِيَّةِ</h2>
               <div class="lc-sub">لـ نعمات أحمد فؤاد · ص ٤٦ – ٥٤</div>
+              <div class="lc-best" id="home-best-lesson3" hidden></div>
             </div>
-            <svg class="lc-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M32 12 C39 22 39 36 32 45 C25 36 25 22 32 12 Z"/>
-              <path d="M32 45 C20 41 13 31 16 20 C24 25 29 35 32 45 Z"/>
-              <path d="M32 45 C44 41 51 31 48 20 C40 25 35 35 32 45 Z"/>
-              <path d="M16 51 Q32 57 48 51"/>
-            </svg>
+            
           </div>
           <p style="margin:0; font-size:var(--fs-md); color:var(--text-muted);">رسالة اعتزاز وإجلال للمرأة المصرية وأصالتها وكفاحها وعطائها عبر التاريخ مع نهر النيل وأرض مصر.</p>
           <div class="lc-progress-block">
@@ -2388,12 +2471,7 @@
           <h1>مِصْرُ مَهْدُ العِلْمِ</h1>
           <p>كلمة العالِم المصري الكبير <strong>الدكتور أحمد زويل</strong> بعد تسلمه جائزة نوبل في الكيمياء — رحلة تفاعلية من أرض إيزيس وحضارة ٦٠٠٠ سنة لحد اكتشاف «الفمتوثانية».</p>
         </div>
-        <svg class="hero-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(30 32 32)"/>
-              <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(-30 32 32)"/>
-              <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(90 32 32)"/>
-              <circle cx="32" cy="32" r="3"/>
-            </svg>
+        <div class="hero-art lesson-art" data-art="lesson1"></div>
       </section>
 
       <!-- 1) HOOK & BIO -->
@@ -2834,10 +2912,7 @@
           <h1>أُسْطُورَةٌ مِصْرِيَّةٌ (البَطَلُ أَحْمَد مَنْسِي)</h1>
           <p>قصة قائد وإنسان عظيم جمع بين العلم والشجاعة والتواضع — نتعلّم من سيرته معنى الانتماء الحقيقي للوطن والتضحية في سبيل حمايته.</p>
         </div>
-        <svg class="hero-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M32 8 L52 16 V34 C52 46 43 54 32 58 C21 54 12 46 12 34 V16 Z"/>
-              <path d="M32 22 L35 29 L42.5 29.6 L36.8 34.4 L38.6 41.8 L32 37.8 L25.4 41.8 L27.2 34.4 L21.5 29.6 L29 29 Z"/>
-            </svg>
+        <div class="hero-art lesson-art" data-art="lesson2"></div>
       </section>
 
       <!-- 1) HOOK & HERO CARD -->
@@ -3529,12 +3604,7 @@
           <h1>رِسَالَةٌ إِلَى المَرْأَةِ المِصْرِيَّةِ</h1>
           <p>مقال الكاتبة والمفكرة المصرية الكبيرة <strong>الدكتورة نعمات أحمد فؤاد</strong> — رسالة فخر وامتنان للمرأة المصرية التي غذّت الحضارة، وحملت طابع النيل والأرض والصحراء عبر الأجيال.</p>
         </div>
-        <svg class="hero-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M32 12 C39 22 39 36 32 45 C25 36 25 22 32 12 Z"/>
-              <path d="M32 45 C20 41 13 31 16 20 C24 25 29 35 32 45 Z"/>
-              <path d="M32 45 C44 41 51 31 48 20 C40 25 35 35 32 45 Z"/>
-              <path d="M16 51 Q32 57 48 51"/>
-            </svg>
+        <div class="hero-art lesson-art" data-art="lesson3"></div>
       </section>
 
       <!-- 1) HOOK & AUTHOR CARD -->
@@ -6496,7 +6566,7 @@
 
         const diffHtml = isQuiz ? `<div style="margin-bottom:8px;"><span class="diff-badge diff-${item.diff}">${item.diffLabel}</span></div>` : "";
 
-        if (item.type === "mcq") {
+        if (item.type === "mcq" || (!item.type && Array.isArray(item.options))) {
           card.innerHTML = `
             ${diffHtml}
             <div class="q-text">${item.q}</div>
@@ -8609,6 +8679,10 @@
           try { activeSideBtn.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) {}
         }
 
+        try {
+          if (typeof window.onStationShown === "function") window.onStationShown(lessonKey, idx, list.length);
+        } catch (e) {}
+
         // Scroll smoothly to top of the new station
         window.scrollTo({ top: 0, behavior: smoothScroll ? "smooth" : "auto" });
       }
@@ -8713,10 +8787,36 @@
         return res;
       };
 
+      // Append a final «نتيجتك» station after the mini quiz of each lesson
+      function withResults(lk, specs) {
+        const sec = document.createElement("section");
+        sec.className = "card results-card";
+        sec.id = "results-" + lk;
+        sec.innerHTML = '<div class="section-head"><h2 class="section-title">نتيجتك</h2><div class="section-meta">ملخص أدائك في الدرس</div></div><div id="resBody-' + lk + '"></div>';
+        const quizSec = document.getElementById(lk === "lesson1" ? "l1-quiz" : (lk === "lesson2" ? "l2-quiz" : "l3-quiz"));
+        if (quizSec) {
+          const w = document.createElement("div");
+          w.className = "res-cta-wrap";
+          w.innerHTML = '<button type="button" class="btn btn-primary" onclick="if(window.SFX) SFX.click(); goToResults(\'' + lk + '\')">شوف نتيجتك <i class="ph ph-arrow-left" aria-hidden="true"></i></button>';
+          quizSec.appendChild(w);
+        }
+        return specs.concat([{ title: "نتيجتك", nodes: [sec], reviewOnly: true }]);
+      }
+
+      window.__stInfo = {
+        getStations: lk => LESSON_STATIONS[lk] || [],
+        attempted: lk => stState.attemptedDone[lk] || {},
+        isComplete: (lk, st) => isStationComplete(lk, st),
+        clearAttempted: (lk, ids) => {
+          (ids || []).forEach(id => { if (stState.attemptedDone[lk]) delete stState.attemptedDone[lk][id]; });
+          saveStState();
+        }
+      };
+
       // Build and mount all 3 lessons into stations!
-      mountLessonStations("lesson1", buildLesson1Stations());
-      mountLessonStations("lesson2", buildLesson2Stations());
-      mountLessonStations("lesson3", buildLesson3Stations());
+      mountLessonStations("lesson1", withResults("lesson1", buildLesson1Stations()));
+      mountLessonStations("lesson2", withResults("lesson2", buildLesson2Stations()));
+      mountLessonStations("lesson3", withResults("lesson3", buildLesson3Stations()));
 
       // Activate initial view cleanly
       if (currentView === "lesson1" || currentView === "lesson2" || currentView === "lesson3") {
@@ -8847,6 +8947,356 @@
             : '<i class="ph ph-speaker-slash" aria-hidden="true"></i> <span>الصوت: مكتوم</span>';
         }
       } catch (e) {}
+    })();
+
+  
+    /* ==============================================================
+       16. LESSON ILLUSTRATIONS (HAND-DRAWN STYLE SVG SCENES)
+       ============================================================== */
+    const LESSON_ART = (function () {
+      const INK = "#1B2236", SAND = "#F3E9D7", SAND_D = "#E4D2B0", PAPER = "#FBF6EC", GOLD = "#E9B949";
+      const open = (label) => `<svg viewBox="0 0 240 160" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${label}" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="0" y="0" width="240" height="160" fill="${PAPER}" stroke="none"/>`;
+
+      const lesson1 = open("ميدالية نوبل أمام الأهرامات ورمز الذرة") + `
+        <circle cx="200" cy="34" r="13" fill="${GOLD}" opacity="0.35" stroke="none"/>
+        <rect x="0" y="128" width="240" height="32" fill="${SAND}" stroke="none"/>
+        <path d="M0 128 H240"/>
+        <path d="M118 128 L166 66 L214 128 Z" fill="${SAND}"/>
+        <path d="M166 66 L214 128 L178 128 Z" fill="${SAND_D}"/>
+        <path d="M128 118 H144 M136.5 108 H152 M145.5 96 H158 M154.5 84 H163" stroke-width="1"/>
+        <path d="M188 128 L208 102 L230 128 Z" fill="${SAND}"/>
+        <path d="M208 102 L230 128 L214 128 Z" fill="${SAND_D}"/>
+        <g transform="translate(54 46)">
+          <ellipse rx="24" ry="8.5" stroke="#1E5BFF"/>
+          <ellipse rx="24" ry="8.5" transform="rotate(60)" stroke="#1E5BFF"/>
+          <ellipse rx="24" ry="8.5" transform="rotate(120)" stroke="#1E5BFF"/>
+          <circle r="3.6" fill="#1E5BFF" stroke="none"/>
+        </g>
+        <path d="M74 66 L88 66 L100 100 L90 104 Z" fill="#1E5BFF"/>
+        <path d="M112 66 L126 66 L110 104 L100 100 Z" fill="#DCE6FF"/>
+        <circle cx="100" cy="118" r="22" fill="${GOLD}"/>
+        <circle cx="100" cy="118" r="15" fill="#F2CF73"/>
+        <path d="M91 126 C88 120 88 113 92 108" stroke-width="1.2"/>
+        <path d="M109 126 C112 120 112 113 108 108" stroke-width="1.2"/>
+        <path d="M89.5 121 l-3 -1.5 M89 116 l-3 -0.5 M90.5 111.5 l-2.5 -1.5 M110.5 121 l3 -1.5 M111 116 l3 -0.5 M109.5 111.5 l2.5 -1.5" stroke-width="1.1"/>
+        <path d="M100 111 l2 4.2 4.6 .5 -3.4 3 1 4.5 -4.2 -2.4 -4.2 2.4 1 -4.5 -3.4 -3 4.6 -.5 Z" fill="${INK}" stroke="none"/>
+      </svg>`;
+
+      const lesson2 = open("صقر بجناحين مفرودين فوق جبال سيناء وعلم مصر") + `
+        <circle cx="52" cy="50" r="19" fill="#FFE3CC"/>
+        <path d="M52 22 V26 M52 74 V78 M24 50 H28 M76 50 H80 M32 30 l3 3 M69 67 l3 3 M72 30 l-3 3 M35 67 l-3 3" stroke="#FF6B00" stroke-width="1.4"/>
+        <path d="M0 160 V128 L42 94 L66 110 L110 68 L150 110 L178 92 L240 126 V160 Z" fill="${SAND}"/>
+        <path d="M110 68 L150 110 L124 110 L116 92 Z" fill="${SAND_D}" stroke="none"/>
+        <path d="M178 92 L240 126 L208 124 Z" fill="${SAND_D}" stroke="none"/>
+        <path d="M42 94 L66 110 L52 112 Z" fill="${SAND_D}" stroke="none"/>
+        <path d="M0 140 C40 134 80 142 120 136 S200 132 240 138" stroke-width="1"/>
+        <path d="M110 68 V44"/>
+        <rect x="110" y="44" width="22" height="5" fill="#C8102E" stroke-width="1.1"/>
+        <rect x="110" y="49" width="22" height="5" fill="#FFFFFF" stroke-width="1.1"/>
+        <rect x="110" y="54" width="22" height="5" fill="${INK}" stroke-width="1.1"/>
+        <g transform="translate(180 40) scale(0.85)">
+          <path d="M0 6 C-12 -2 -28 -10 -56 -12 L-46 -4 L-58 -2 L-46 4 L-54 8 L-38 10 C-24 12 -12 12 -2 14 Z" fill="#FFE3CC"/>
+          <path d="M0 6 C12 -2 28 -10 56 -12 L46 -4 L58 -2 L46 4 L54 8 L38 10 C24 12 12 12 2 14 Z" fill="#FFE3CC"/>
+          <path d="M-40 -6 L-30 0 M-34 2 L-24 4 M40 -6 L30 0 M34 2 L24 4" stroke-width="1"/>
+          <ellipse cx="0" cy="12" rx="7" ry="13" fill="#FF6B00"/>
+          <circle cx="0" cy="-4" r="5.5" fill="#FF6B00"/>
+          <path d="M-2 -1 L0 4 L2 -1" fill="${INK}" stroke-width="1"/>
+          <path d="M-6 23 L0 34 L6 23" fill="#FF6B00"/>
+        </g>
+      </svg>`;
+
+      const lesson3 = open("امرأة مصرية تحمل جرة بجوار النيل وسنابل القمح والنخيل") + `
+        <circle cx="186" cy="112" r="20" fill="${GOLD}" opacity="0.85"/>
+        <rect x="0" y="112" width="240" height="20" fill="${SAND}" stroke="none"/>
+        <path d="M0 112 H240"/>
+        <path d="M0 132 C40 126 80 138 120 132 S200 126 240 132 V160 H0 Z" fill="#D6E6F5"/>
+        <path d="M24 146 C34 143 44 149 54 146 M150 148 C160 145 170 151 180 148 M96 154 C104 151 112 156 120 153" stroke-width="1"/>
+        <path d="M214 112 C213 92 211 72 205 54" stroke-width="3"/>
+        <path d="M205 54 C196 46 184 46 176 54 M205 54 C200 42 190 36 180 38 M205 54 C210 42 220 38 230 42 M205 54 C214 48 226 50 234 58 M205 54 C206 44 204 36 198 30" fill="none" stroke-width="2.2"/>
+        <circle cx="203" cy="58" r="2.4" fill="${GOLD}"/><circle cx="208" cy="59" r="2.4" fill="${GOLD}"/>
+        <g stroke-width="1.3">
+          <path d="M24 112 C24 96 22 84 20 70 M36 112 C36 94 37 82 38 66 M48 112 C47 98 50 86 54 74"/>
+          <g fill="${GOLD}">
+            <ellipse cx="19" cy="72" rx="2.2" ry="4" transform="rotate(-20 19 72)"/><ellipse cx="22.5" cy="78" rx="2.2" ry="4" transform="rotate(20 22.5 78)"/><ellipse cx="18.5" cy="82" rx="2.2" ry="4" transform="rotate(-20 18.5 82)"/>
+            <ellipse cx="37" cy="68" rx="2.2" ry="4" transform="rotate(-20 37 68)"/><ellipse cx="40.5" cy="74" rx="2.2" ry="4" transform="rotate(20 40.5 74)"/><ellipse cx="36" cy="78" rx="2.2" ry="4" transform="rotate(-20 36 78)"/>
+            <ellipse cx="53" cy="76" rx="2.2" ry="4" transform="rotate(-10 53 76)"/><ellipse cx="56" cy="82" rx="2.2" ry="4" transform="rotate(25 56 82)"/><ellipse cx="51" cy="86" rx="2.2" ry="4" transform="rotate(-15 51 86)"/>
+          </g>
+        </g>
+        <path d="M101 70 C97 72 95 76 95 80 L89 126 H133 L127 80 C127 76 125 72 121 70 Z" fill="#7B2FF7"/>
+        <path d="M100 88 H122 M97 104 H125" stroke="#EADCFD" stroke-width="1.2"/>
+        <path d="M103 52 C103 43 119 43 119 52 C121 60 124 66 127 74 L95 74 C98 66 101 60 103 52 Z" fill="#EADCFD"/>
+        <ellipse cx="111" cy="55" rx="5.2" ry="6.4" fill="${SAND_D}"/>
+        <path d="M99 76 C95 90 93 100 95 108" stroke-width="2"/>
+        <path d="M123 75 C130 64 128 52 121 44" stroke-width="2"/>
+        <ellipse cx="111" cy="37" rx="10" ry="7.5" fill="${SAND_D}"/>
+        <path d="M106 30 H116 V27 H106 Z" fill="${SAND_D}"/>
+        <path d="M103 39 C108 41 114 41 119 39" stroke-width="1"/>
+        <path d="M84 126 H138" stroke-width="1.2"/>
+      </svg>`;
+
+      return { lesson1, lesson2, lesson3 };
+    })();
+
+    function mountLessonArt(root) {
+      (root || document).querySelectorAll("[data-art]").forEach(el => {
+        const key = el.getAttribute("data-art");
+        if (LESSON_ART[key] && !el.querySelector("svg")) el.innerHTML = LESSON_ART[key];
+      });
+    }
+    mountLessonArt(document);
+
+    /* ==============================================================
+       17. RESULTS STATION (SCORE + REVIEW LIST + BEST SCORE)
+       ============================================================== */
+    (function initResultsStation() {
+      const QUIZ_OF = { lesson1: MINI_QUIZ, lesson2: L2_MINI_QUIZ, lesson3: L3_MINI_QUIZ };
+      const QUIZ_SEC = { lesson1: "l1-quiz", lesson2: "l2-quiz", lesson3: "l3-quiz" };
+      const NEXT = { lesson1: "lesson2", lesson2: "lesson3", lesson3: null };
+      const BEST_KEY = "arabic_prep1_unit1_best_v1";
+      const ACTIVITY = {
+        timeline: ["ترتيب أحداث النص", "timelineFeedback"],
+        l2_timeline: ["ترتيب الخط الزمني لحياة البطل", "l2TimelineFeedback"],
+        l2_sort_concept: ["تصنيف الفكرة الرئيسة والأفكار الفرعية", "l2SortFeedback"],
+        l3_sort_pp: ["تصنيف: الماضي أم الحاضر", "l3SortFeedback"],
+        l2_vocab_table: ["جدول المفردات", "l2VocabTableFb"],
+        l3_vocab_table: ["جدول المفردات", "l3VocabTableFb"]
+      };
+
+      let best = {};
+      try { best = JSON.parse(localStorage.getItem(BEST_KEY) || "{}") || {}; } catch (e) { best = {}; }
+      function saveBest() { try { localStorage.setItem(BEST_KEY, JSON.stringify(best)); } catch (e) {} }
+
+      const AR = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+      const esc = t => String(t || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      function strip(html) {
+        const d = document.createElement("div");
+        d.innerHTML = html || "";
+        return (d.textContent || "").replace(/\s+/g, " ").trim();
+      }
+
+      function quizStatus(lk) {
+        const q = QUIZ_OF[lk] || [];
+        const ls = getLessonState(lk);
+        return {
+          total: q.length,
+          answered: q.filter(x => ls.solved[x.id]).length,
+          score: q.filter(x => ls.quizCorrect[x.id]).length
+        };
+      }
+
+      function stationOf(el) {
+        const p = el && el.closest(".station-panel");
+        return p ? Number(p.dataset.station) : -1;
+      }
+
+      function contentStations(lk) {
+        const info = window.__stInfo;
+        const all = info ? info.getStations(lk) : [];
+        return all.slice(0, Math.max(0, all.length - 1));
+      }
+
+      function quizStationIdx(lk) {
+        const sec = document.getElementById(QUIZ_SEC[lk]);
+        return stationOf(sec);
+      }
+
+      function answerText(item) {
+        if (!item) return "";
+        if (Array.isArray(item.options) && typeof item.answer === "number") return strip(item.options[item.answer]);
+        if (typeof item.answer === "boolean") return item.answer ? "صح" : "خطأ";
+        if (item.displayAnswer) return strip(item.displayAnswer);
+        if (Array.isArray(item.accepted) && item.accepted.length) return strip(item.accepted[0]);
+        return "";
+      }
+
+      function reviewItems(lk) {
+        const ls = getLessonState(lk);
+        const out = [];
+        const seen = new Set();
+        (QUIZ_OF[lk] || []).forEach(q => {
+          if (ls.solved[q.id] && !ls.quizCorrect[q.id]) {
+            seen.add(q.id);
+            out.push({ q: strip(q.q), a: answerText(q), st: stationOf(document.getElementById("card_" + q.id)), tag: "الميني كويز" });
+          }
+        });
+        const att = (window.__stInfo && window.__stInfo.attempted(lk)) || {};
+        Object.keys(att).forEach(id => {
+          if (!att[id] || seen.has(id)) return;
+          seen.add(id);
+          if (ACTIVITY[id]) {
+            out.push({ q: ACTIVITY[id][0], a: "", st: stationOf(document.getElementById(ACTIVITY[id][1])), tag: "نشاط في الدرس" });
+            return;
+          }
+          const card = document.getElementById("card_" + id);
+          if (!card) return;
+          let item = null;
+          try { item = typeof findExercise === "function" ? findExercise(id) : null; } catch (e) { item = null; }
+          const qText = item && item.q ? strip(item.q) : strip((card.querySelector(".q-text") || card).innerHTML).slice(0, 160);
+          out.push({ q: qText, a: answerText(item), st: stationOf(card), tag: "التدريبات" });
+        });
+        return out;
+      }
+
+      function ring(score, total) {
+        const r = 42, c = 2 * Math.PI * r;
+        const off = c * (1 - (total ? score / total : 0));
+        return `<svg class="res-ring" viewBox="0 0 104 104" aria-hidden="true"><circle class="trk" cx="52" cy="52" r="${r}"/><circle class="val" cx="52" cy="52" r="${r}" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>`;
+      }
+
+      function updateBestLines() {
+        ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+          const el = document.getElementById("home-best-" + lk);
+          if (!el) return;
+          if (typeof best[lk] === "number") {
+            el.hidden = false;
+            el.innerHTML = `<i class="ph ph-trophy" aria-hidden="true"></i> أحسن نتيجة في الكويز: ${AR(best[lk])} من ${AR((QUIZ_OF[lk] || []).length)}`;
+          } else {
+            el.hidden = true;
+            el.innerHTML = "";
+          }
+        });
+      }
+
+      function render(lk) {
+        const body = document.getElementById("resBody-" + lk);
+        if (!body) return;
+        const s = quizStatus(lk);
+        const ls = getLessonState(lk);
+        const info = window.__stInfo;
+        const content = contentStations(lk);
+        const doneSt = info ? content.filter(st => info.isComplete(lk, st)).length : 0;
+        const dict = (typeof DICTIONARY === "object" && DICTIONARY[lk]) || {};
+        const dictTotal = Object.keys(dict).length;
+        const dictOpened = Object.keys(ls.solved).filter(k => k.indexOf("dict_") === 0 && dict[k.slice(5)]).length;
+
+        const stats = `
+          <div class="res-stats">
+            <div class="res-stat"><strong>${AR(doneSt)} / ${AR(content.length)}</strong><span>محطات خلّصتها</span></div>
+            <div class="res-stat"><strong>${AR(dictOpened)}${dictTotal ? " / " + AR(dictTotal) : ""}</strong><span>كلمات فتحتها في القاموس</span></div>
+            <div class="res-stat"><strong>${AR(ls.xp)}</strong><span>نقاط XP في الدرس</span></div>
+          </div>`;
+        const art = `<div class="res-art lesson-art" data-art="${lk}"></div>`;
+        const homeBtn = `<button type="button" class="btn btn-soft" onclick="if(window.SFX) SFX.click(); navigateTo('home')">الرجوع للدروس</button>`;
+
+        if (s.answered < s.total) {
+          const left = s.total - s.answered;
+          const leftTxt = left === 1 ? "سؤال واحد" : left === 2 ? "سؤالين" : AR(left) + " أسئلة";
+          const msg = s.answered === 0 ? "لسه ماحليتش الميني كويز." : `فاضل ${leftTxt} في الميني كويز.`;
+          body.innerHTML = `
+            <div class="res-head">
+              <div class="res-pending"><p class="res-msg">${msg} خلّصه الأول عشان تشوف نتيجتك.</p></div>
+              ${art}
+            </div>
+            ${stats}
+            <div class="res-actions">
+              <button type="button" class="btn btn-primary" onclick="if(window.SFX) SFX.click(); goToStation('${lk}', ${quizStationIdx(lk)}, true)">روح للميني كويز <i class="ph ph-arrow-left" aria-hidden="true"></i></button>
+              ${homeBtn}
+            </div>`;
+        } else {
+          if (!(typeof best[lk] === "number" && best[lk] >= s.score)) {
+            best[lk] = s.score;
+            saveBest();
+            updateBestLines();
+          }
+          const msg = s.score === s.total
+            ? "ممتاز، إنت فاهم الدرس كويس."
+            : (s.score >= s.total - 2 ? "كويس جدًا، فاضل حاجات بسيطة تراجعها." : "محتاج تراجع الدرس تاني بهدوء، وبعدين جرّب الكويز.");
+          const items = reviewItems(lk);
+          const list = items.length
+            ? `<ul class="res-list">${items.map(it => `
+                <li class="res-item">
+                  <div>
+                    <div class="res-q">${esc(it.q)}</div>
+                    ${it.a ? `<div class="res-a">الإجابة الصحيحة: <strong>${esc(it.a)}</strong></div>` : `<div class="res-a">${esc(it.tag)}</div>`}
+                  </div>
+                  ${it.st >= 0 ? `<button type="button" class="btn btn-outline" onclick="if(window.SFX) SFX.click(); goToStation('${lk}', ${it.st}, true)">روح للمحطة ${AR(it.st + 1)}</button>` : ""}
+                </li>`).join("")}</ul>`
+            : `<p class="res-none">مفيش أخطاء تراجعها.</p>`;
+          const next = NEXT[lk];
+          body.innerHTML = `
+            <div class="res-head">
+              <div>
+                <div class="res-score-row">
+                  ${ring(s.score, s.total)}
+                  <div class="res-score">${AR(s.score)} <small>من ${AR(s.total)}</small></div>
+                </div>
+                <p class="res-msg">${msg}</p>
+              </div>
+              ${art}
+            </div>
+            ${stats}
+            <h3 class="res-sub">راجع دول</h3>
+            ${list}
+            <div class="res-actions">
+              <button type="button" class="btn btn-primary" onclick="retakeQuiz('${lk}')"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> أعد الكويز</button>
+              ${next ? `<button type="button" class="btn btn-soft" onclick="if(window.SFX) SFX.click(); navigateTo('${next}')">الدرس التالي <i class="ph ph-arrow-left" aria-hidden="true"></i></button>` : ""}
+              ${homeBtn}
+            </div>`;
+        }
+        mountLessonArt(body);
+      }
+
+      window.goToResults = function (lk) {
+        const info = window.__stInfo;
+        const all = info ? info.getStations(lk) : [];
+        if (all.length) goToStation(lk, all.length - 1, true);
+      };
+
+      window.retakeQuiz = function (lk) {
+        const ls = getLessonState(lk);
+        const quiz = QUIZ_OF[lk] || [];
+        quiz.forEach(q => {
+          if (ls.quizCorrect[q.id]) ls.xp = Math.max(0, ls.xp - 15);
+          delete ls.solved[q.id];
+          delete ls.quizCorrect[q.id];
+          if (typeof attempts === "object" && attempts) delete attempts[q.id];
+          const card = document.getElementById("card_" + q.id);
+          if (card) {
+            card.querySelectorAll(".opt-btn").forEach(b => {
+              b.disabled = false;
+              b.classList.remove("correct", "wrong");
+            });
+          }
+          const fb = document.getElementById("fb_" + q.id);
+          if (fb) { fb.className = "feedback"; fb.innerHTML = ""; }
+        });
+        if (window.__stInfo) window.__stInfo.clearAttempted(lk, quiz.map(q => q.id));
+        saveState();
+        updateHUD();
+        if (window.SFX) SFX.click();
+        goToStation(lk, quizStationIdx(lk), true);
+      };
+
+      // Called by the station engine every time a station is shown
+      window.onStationShown = function (lk, idx, len) {
+        if (idx !== len - 1) return;
+        render(lk);
+        const s = quizStatus(lk);
+        if (s.total && s.answered === s.total && window.SFX) {
+          if (s.score === s.total) SFX.celebrate(); else SFX.correct();
+        }
+      };
+
+      // Keep the results panel fresh while it is open
+      const _hudForResults = window.updateHUD;
+      window.updateHUD = function () {
+        const r = _hudForResults.apply(this, arguments);
+        try {
+          ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+            const sec = document.getElementById("results-" + lk);
+            const p = sec && sec.closest(".station-panel");
+            if (p && p.classList.contains("active")) render(lk);
+          });
+        } catch (e) {}
+        return r;
+      };
+
+      updateBestLines();
+      ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+        const sec = document.getElementById("results-" + lk);
+        const p = sec && sec.closest(".station-panel");
+        if (p && p.classList.contains("active")) render(lk);
+      });
     })();
 
   </script>
