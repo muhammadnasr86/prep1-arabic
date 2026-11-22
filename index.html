@@ -1726,6 +1726,7 @@
 
       <div class="hud">
         <div class="xp-pill" id="xpDisplay" aria-live="polite" title="مجموع نقاطك">⭐ <span id="xpVal">0</span> XP</div>
+        <button class="icon-btn" id="soundToggle" type="button" aria-label="تشغيل أو كتم المؤثرات الصوتية" aria-pressed="true" title="تشغيل / كتم المؤثرات الصوتية">🔊</button>
         <button class="icon-btn" id="darkToggle" type="button" aria-label="تبديل الوضع الليلي">🌙 الوضع الليلي</button>
         <button class="icon-btn" id="resetBtn" type="button" title="إعادة ضبط التقدم">🔄 إعادة</button>
       </div>
@@ -7087,6 +7088,401 @@
     renderL3Flashcards();
     initTTS();
     updateHUD();
+
+  
+    /* ==============================================================
+       13. INTERACTIVE WEB AUDIO API SOUND EFFECTS (NO AUDIO FILES)
+       ============================================================== */
+    (function initSoundEffects() {
+      const SFX_KEY = "arabic_prep1_unit1_sfx_v1";
+      let enabled = true;
+      let userInteracted = false;
+      let audioCtx = null;
+      let lastSpecialTs = 0;
+      let lastXpTs = 0;
+      let gradingDepth = 0;
+
+      // Load saved preference safely inside try/catch
+      try {
+        const saved = localStorage.getItem(SFX_KEY);
+        if (saved === "0" || saved === "false") enabled = false;
+      } catch (e) {}
+
+      function savePref() {
+        try {
+          localStorage.setItem(SFX_KEY, enabled ? "1" : "0");
+        } catch (e) {}
+      }
+
+      // Guarantee NO sound ever plays before an explicit user gesture
+      function markUserGesture() {
+        userInteracted = true;
+      }
+      document.addEventListener("pointerdown", markUserGesture, true);
+      document.addEventListener("touchstart", markUserGesture, { capture: true, passive: true });
+      document.addEventListener("mousedown", markUserGesture, true);
+      document.addEventListener("keydown", markUserGesture, true);
+
+      function getCtx() {
+        if (!enabled || !userInteracted) return null;
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          if (!audioCtx) audioCtx = new AC();
+          if (audioCtx.state === "suspended") {
+            audioCtx.resume().catch(() => {});
+          }
+          return audioCtx;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      // Gentle shaped tone helper (soft attack & exponential fade, child-friendly volume)
+      function playTone(ctx, freq, startOffset, duration, type, peakGain, endFreq) {
+        try {
+          const now = ctx.currentTime + startOffset;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type || "sine";
+          osc.frequency.setValueAtTime(freq, now);
+          if (endFreq && endFreq !== freq) {
+            osc.frequency.exponentialRampToValueAtTime(Math.max(20, endFreq), now + duration);
+          }
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.linearRampToValueAtTime(peakGain, now + Math.min(0.014, duration * 0.25));
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + duration + 0.02);
+        } catch (e) {}
+      }
+
+      const SFX = {
+        // 1) Short light click for buttons & cards (~45ms)
+        click() {
+          const ctx = getCtx();
+          if (!ctx) return;
+          playTone(ctx, 640, 0, 0.045, "sine", 0.052, 430);
+        },
+
+        // 2) Pleasant cheerful chime for correct answer (~0.36s)
+        correct() {
+          const ctx = getCtx();
+          if (!ctx) return;
+          lastSpecialTs = performance.now();
+          playTone(ctx, 523.25, 0.00, 0.14, "sine", 0.082);      // C5
+          playTone(ctx, 659.25, 0.08, 0.16, "sine", 0.082);      // E5
+          playTone(ctx, 783.99, 0.16, 0.22, "triangle", 0.075);  // G5
+        },
+
+        // 3) Calm, soft non-startling tone for wrong answer (~0.26s)
+        wrong() {
+          const ctx = getCtx();
+          if (!ctx) return;
+          lastSpecialTs = performance.now();
+          playTone(ctx, 305, 0.00, 0.13, "sine", 0.060, 285);
+          playTone(ctx, 250, 0.11, 0.16, "sine", 0.055, 232);
+        },
+
+        // 4) Delicate little "ting" when gaining XP (~0.22s)
+        xp(delaySec) {
+          const ctx = getCtx();
+          if (!ctx) return;
+          const nowMs = performance.now();
+          if (nowMs - lastXpTs < 120) return;
+          lastXpTs = nowMs;
+          const d = typeof delaySec === "number" ? delaySec : 0;
+          playTone(ctx, 1318.5, d, 0.22, "sine", 0.048);         // E6 bell
+          playTone(ctx, 1975.5, d + 0.01, 0.15, "sine", 0.022);  // B6 harmonic
+        },
+
+        // 5) Short warm celebration fanfare for earning a badge or finishing a lesson/quiz (~1.15s)
+        celebrate() {
+          const ctx = getCtx();
+          if (!ctx) return;
+          lastSpecialTs = performance.now();
+          const d = 0.28;
+          playTone(ctx, 523.25, d + 0.00, 0.16, "triangle", 0.078); // C5
+          playTone(ctx, 659.25, d + 0.12, 0.16, "triangle", 0.078); // E5
+          playTone(ctx, 783.99, d + 0.24, 0.18, "triangle", 0.082); // G5
+          playTone(ctx, 1046.5, d + 0.38, 0.52, "sine", 0.085);     // C6
+          playTone(ctx, 783.99, d + 0.38, 0.48, "sine", 0.042);     // G5 harmony
+          playTone(ctx, 659.25, d + 0.38, 0.48, "sine", 0.038);     // E5 harmony
+        },
+
+        // 6) Light card flip swoosh (~0.10s)
+        flip() {
+          const ctx = getCtx();
+          if (!ctx) return;
+          lastSpecialTs = performance.now();
+          try {
+            const len = Math.floor(ctx.sampleRate * 0.085);
+            const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < len; i++) {
+              data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+            }
+            const src = ctx.createBufferSource();
+            src.buffer = buf;
+            const filter = ctx.createBiquadFilter();
+            filter.type = "bandpass";
+            filter.frequency.setValueAtTime(1100, ctx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(2200, ctx.currentTime + 0.08);
+            filter.Q.value = 1.4;
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.001, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.052, ctx.currentTime + 0.018);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.085);
+            src.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            src.start();
+          } catch (e) {}
+          playTone(ctx, 340, 0, 0.08, "sine", 0.032, 520);
+        },
+
+        // 7) Soft gentle plop when dropping an item in drag-and-drop (~0.085s)
+        drop() {
+          const ctx = getCtx();
+          if (!ctx) return;
+          lastSpecialTs = performance.now();
+          playTone(ctx, 270, 0, 0.085, "sine", 0.072, 410);
+        }
+      };
+
+      window.SFX = SFX;
+
+      // Sync sticky header 🔊 / 🔇 button
+      const toggleBtn = document.getElementById("soundToggle");
+      function renderSoundBtn() {
+        if (!toggleBtn) return;
+        toggleBtn.textContent = enabled ? "🔊" : "🔇";
+        toggleBtn.setAttribute("aria-pressed", enabled ? "true" : "false");
+        toggleBtn.title = enabled ? "كتم المؤثرات الصوتية" : "تشغيل المؤثرات الصوتية";
+      }
+      renderSoundBtn();
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+          userInteracted = true;
+          enabled = !enabled;
+          savePref();
+          renderSoundBtn();
+          if (enabled) {
+            lastSpecialTs = performance.now();
+            SFX.click();
+          } else {
+            try {
+              if ("speechSynthesis" in window && window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+              }
+            } catch (e) {}
+          }
+        });
+      }
+
+      // Hook 1: XP "ting" whenever new XP is awarded in any lesson
+      const _prevAddXP = window.addXP;
+      if (typeof _prevAddXP === "function") {
+        window.addXP = function(lessonKey, id, amount, msg) {
+          const ls = typeof getLessonState === "function" ? getLessonState(lessonKey) : null;
+          const isNew = ls && !ls.solved[id];
+          const res = _prevAddXP.apply(this, arguments);
+          if (isNew && userInteracted) {
+            // If called from inside a grader (correct chime), offset the XP ting slightly so both sound crisp
+            SFX.xp(gradingDepth > 0 ? 0.24 : 0.02);
+            lastSpecialTs = performance.now();
+          }
+          return res;
+        };
+      }
+
+      // Helper to wrap feedback-producing grading functions cleanly
+      function wrapGrader(fnName, getFbId) {
+        const orig = window[fnName];
+        if (typeof orig !== "function") return;
+        window[fnName] = function() {
+          const fbId = getFbId.apply(null, arguments);
+          const fbEl = fbId ? document.getElementById(fbId) : null;
+          gradingDepth++;
+          let res;
+          try {
+            res = orig.apply(this, arguments);
+          } finally {
+            gradingDepth--;
+          }
+          if (!userInteracted || !fbEl || !fbEl.classList.contains("show")) return res;
+          if (fbEl.classList.contains("ok") || fbEl.classList.contains("model")) {
+            SFX.correct();
+          } else if (fbEl.classList.contains("err")) {
+            SFX.wrong();
+          } else if (fbEl.classList.contains("warn")) {
+            // Distinguish actual wrong attempt from empty-input/select reminders ("✍️" / "👆")
+            const txt = (fbEl.textContent || "").trim();
+            if (!txt.startsWith("✍️") && !txt.startsWith("👆")) {
+              SFX.wrong();
+            } else {
+              SFX.click();
+            }
+          }
+          return res;
+        };
+      }
+
+      // Hook 2: All MCQ, TF, Fill, Mistake, Timeline, Sort, Vocab Table, Match, Diagram, Hook & Predict graders
+      wrapGrader("checkMCQ", (lk, id) => "fb_" + id);
+      wrapGrader("checkTF", (lk, id) => "fb_" + id);
+      wrapGrader("checkFill", (lk, id) => "fb_" + id);
+      wrapGrader("pickMistake", (lk, id) => "fb_" + id);
+      wrapGrader("checkOpen", (lk, id) => "fb_" + id);
+      wrapGrader("checkTimeline", () => "timelineFeedback");
+      wrapGrader("checkL2Timeline", () => "l2TimelineFeedback");
+      wrapGrader("checkL2Sort", () => "l2SortFeedback");
+      wrapGrader("checkL3Sort", () => "l3SortFeedback");
+      wrapGrader("checkL2VocabTable", () => "l2VocabTableFb");
+      wrapGrader("checkL3VocabTable", () => "l3VocabTableFb");
+      wrapGrader("pickL3MatchProof", () => "l3MatchFb");
+      wrapGrader("checkL3Diagram", () => "l3DiagramFb");
+      wrapGrader("chooseHook", () => "hookFeedback");
+      wrapGrader("chooseL2Hook", () => "l2HookFeedback");
+      wrapGrader("chooseL3Hook", () => "l3HookFeedback");
+      wrapGrader("predictL2", (fbId) => fbId);
+      wrapGrader("submitWhatIf", () => "whatIfFeedback");
+
+      // Hook 3: Drag-and-drop & reorder drop sounds (only when an item actually moves/drops)
+      const _origMoveL1 = window.moveTimeline;
+      if (typeof _origMoveL1 === "function") {
+        window.moveTimeline = function(idx, dir) {
+          const valid = (idx + dir) >= 0 && (idx + dir) < currentOrder.length;
+          const res = _origMoveL1.apply(this, arguments);
+          if (valid && userInteracted) SFX.drop();
+          return res;
+        };
+      }
+      const _origMoveL2 = window.moveL2Timeline;
+      if (typeof _origMoveL2 === "function") {
+        window.moveL2Timeline = function(idx, dir) {
+          const valid = (idx + dir) >= 0 && (idx + dir) < l2CurrentOrder.length;
+          const res = _origMoveL2.apply(this, arguments);
+          if (valid && userInteracted) SFX.drop();
+          return res;
+        };
+      }
+      const _origSyncL1 = window.syncOrderFromDOM;
+      if (typeof _origSyncL1 === "function") {
+        window.syncOrderFromDOM = function() {
+          const res = _origSyncL1.apply(this, arguments);
+          if (userInteracted) SFX.drop();
+          return res;
+        };
+      }
+      const _origSyncL2 = window.syncL2TimelineFromDOM;
+      if (typeof _origSyncL2 === "function") {
+        window.syncL2TimelineFromDOM = function() {
+          const res = _origSyncL2.apply(this, arguments);
+          if (userInteracted) SFX.drop();
+          return res;
+        };
+      }
+      const _origPlaceL2 = window.placeSelectedChip;
+      if (typeof _origPlaceL2 === "function") {
+        window.placeSelectedChip = function(zoneName) {
+          const hadSelection = !!selectedChipId;
+          const res = _origPlaceL2.apply(this, arguments);
+          if (hadSelection && userInteracted) SFX.drop();
+          return res;
+        };
+      }
+      const _origPlaceL3 = window.placeL3Chip;
+      if (typeof _origPlaceL3 === "function") {
+        window.placeL3Chip = function(zoneName) {
+          const hadSelection = !!l3SelectedChip;
+          const res = _origPlaceL3.apply(this, arguments);
+          if (hadSelection && userInteracted) SFX.drop();
+          return res;
+        };
+      }
+
+      document.addEventListener("drop", e => {
+        if (userInteracted && e.target && e.target.closest(".sort-zone, .timeline-list")) {
+          SFX.drop();
+        }
+      }, true);
+      document.addEventListener("touchend", e => {
+        if (!userInteracted) return;
+        const chip = e.target && e.target.closest(".sort-chip");
+        if (chip && e.changedTouches && e.changedTouches[0]) {
+          const touch = e.changedTouches[0];
+          const under = document.elementFromPoint(touch.clientX, touch.clientY);
+          if (under && under.closest(".sort-zone")) {
+            SFX.drop();
+          }
+        }
+      }, { passive: true });
+
+      // Hook 4: Flashcard flip sound (click or Enter/Space)
+      document.addEventListener("click", e => {
+        if (userInteracted && e.target && e.target.closest(".flip-card")) {
+          SFX.flip();
+        }
+      }, true);
+      document.addEventListener("keydown", e => {
+        if (userInteracted && (e.key === "Enter" || e.key === " ") && e.target && e.target.closest(".flip-card")) {
+          SFX.flip();
+        }
+      }, true);
+
+      // Hook 5: Celebration fanfare when a badge is NEWLY earned or a lesson NEWLY reaches 100%
+      const celebrated = new Set();
+      ["badgeAward", "badgeAwardL2", "badgeAwardL3"].forEach(bid => {
+        const el = document.getElementById(bid);
+        if (el && el.classList.contains("show")) celebrated.add(bid);
+      });
+      ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+        if (typeof getLessonProgressPct === "function" && getLessonProgressPct(lk) >= 100) {
+          celebrated.add("done_" + lk);
+        }
+      });
+
+      const _prevUpdateHUD = window.updateHUD;
+      if (typeof _prevUpdateHUD === "function") {
+        window.updateHUD = function() {
+          const res = _prevUpdateHUD.apply(this, arguments);
+          if (!userInteracted) return res;
+          let shouldCelebrate = false;
+          ["badgeAward", "badgeAwardL2", "badgeAwardL3"].forEach(bid => {
+            const el = document.getElementById(bid);
+            if (el && el.classList.contains("show") && !celebrated.has(bid)) {
+              celebrated.add(bid);
+              shouldCelebrate = true;
+            }
+          });
+          ["lesson1", "lesson2", "lesson3"].forEach(lk => {
+            if (typeof getLessonProgressPct === "function" && getLessonProgressPct(lk) >= 100 && !celebrated.has("done_" + lk)) {
+              celebrated.add("done_" + lk);
+              shouldCelebrate = true;
+            }
+          });
+          if (shouldCelebrate) SFX.celebrate();
+          return res;
+        };
+      }
+
+      // Hook 6: Gentle click sound for all interactive buttons & cards (bubble phase so specific sounds take priority)
+      document.addEventListener("click", e => {
+        if (!userInteracted || !enabled) return;
+        const target = e.target && e.target.closest(
+          "button, .lesson-card, .expr-card, .value-card, .dict-word, .dict-term, .qa-btn, .lab-token, .nav-chip"
+        );
+        if (!target) return;
+        if (target.id === "soundToggle") return;
+        if (target.closest(".flip-card")) return;
+        if (performance.now() - lastSpecialTs < 95) return;
+        SFX.click();
+      }, false);
+    })();
 
   </script>
 </body>
