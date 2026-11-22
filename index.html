@@ -12,7 +12,7 @@
     :root {
       /* Lesson Flat Brand Colors */
       --blue: #1E5BFF;
-      --orange: #FF6B00;
+      --orange: #CC4B00;
       --purple: #7B2FF7;
 
       /* Active Lesson Theme (flat color only) */
@@ -212,7 +212,7 @@
     }
     .home-btn:hover {
       border-color: var(--theme);
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
     }
 
     /* Quiet XP Counter */
@@ -227,7 +227,7 @@
       min-height: 44px;
     }
     .xp-pill .ph-star {
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
     }
     .xp-pill span {
       color: var(--text);
@@ -254,7 +254,7 @@
     }
     .icon-btn:hover {
       border-color: var(--theme);
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
     }
 
     .mobile-menu-btn {
@@ -700,7 +700,7 @@
     .btn-primary:hover, .btn-accent:hover { opacity: 0.92; }
     .btn-outline {
       background: transparent;
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
       border: 1px solid var(--theme);
     }
     .btn-outline:hover { background: var(--theme-soft); }
@@ -711,7 +711,7 @@
     }
     .btn-soft:hover {
       border-color: var(--theme);
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
     }
 
     /* Bio Grid */
@@ -753,7 +753,7 @@
       gap: 10px;
     }
     .obj-list li .ph-check {
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
       margin-top: 5px;
     }
 
@@ -869,7 +869,7 @@
       font-family: 'Amiri', serif;
       font-size: var(--fs-lg);
       font-weight: 700;
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
     }
     .dict-meta {
       display: flex;
@@ -1013,7 +1013,7 @@
       align-items: center;
       justify-content: center;
     }
-    .move-btn:hover { border-color: var(--theme); color: var(--theme); }
+    .move-btn:hover { border-color: var(--theme); color: var(--theme-ink, var(--theme)); }
 
     /* Accordion Q&A */
     .qa-item {
@@ -1905,7 +1905,7 @@
     }
     .st-restart-btn:hover {
       border-color: var(--theme);
-      color: var(--theme);
+      color: var(--theme-ink, var(--theme));
     }
 
     /* Main Station Reading Column (max 760px) */
@@ -2381,6 +2381,19 @@
     body.dark .lesson-card.c-l1 .lc-title { color: #9DB8FF; }
     body.dark .lesson-card.c-l2 .lc-title { color: #FFB37A; }
     body.dark .lesson-card.c-l3 .lc-title { color: #C9A8FF; }
+
+    /* ================= POLISH (contrast, dark mode, mobile) ================= */
+    body.dark[data-view="lesson1"] { --theme-ink: #7FA6FF; }
+    body.dark[data-view="lesson2"] { --theme-ink: #FF9A4D; }
+    body.dark[data-view="lesson3"] { --theme-ink: #B794FF; }
+    body.dark { --theme-ink: #9DB8FF; }
+    body.dark .btn-outline { border-color: var(--theme-ink, var(--theme)); }
+    body.dark .mindmap-svg-wrap rect[fill="#FFFFFF"] { fill: var(--card); stroke: var(--border); }
+    body.dark .mindmap-svg-wrap text[fill="#1E293B"] { fill: var(--text); }
+    /* flip cards grow with their text */
+    .flip-inner { display: grid; }
+    .flip-face { position: relative; inset: auto; grid-area: 1 / 1; min-height: 150px; }
+    @media (max-width: 899px) { .hero-art { aspect-ratio: 16 / 9; max-width: 460px; } }
   </style>
 </head>
 <body data-view="home">
@@ -2718,7 +2731,7 @@
         </article>
 
         <!-- Mini Sentence Lab -->
-        <div style="margin-top:22px; padding-top:18px; border-top:2px dashed var(--border);">
+        <div style="margin-top:22px; padding-top:18px; border-top:1px solid var(--border);">
           <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
             <h3 style="margin:0;">مختبر الجملة</h3>
             <span class="meta-inline">· شرح إضافي للتوضيح</span>
@@ -2743,7 +2756,7 @@
         </div>
 
         <!-- What if activity -->
-        <div style="margin-top:22px; padding-top:18px; border-top:2px dashed var(--border);">
+        <div style="margin-top:22px; padding-top:18px; border-top:1px solid var(--border);">
           <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
             <h3 style="margin:0;">سؤال «ماذا لو؟»</h3>
             <span class="section-meta">من الكتاب · ص ٢٥، ٢٨</span>
@@ -3365,7 +3378,7 @@
         <div class="feedback" id="l2SortFeedback"></div>
 
         <!-- Textbook training on Field Marshal Ahmed Ismail (p. 37) -->
-        <div style="margin-top:20px; padding-top:16px; border-top:2px dashed var(--border);">
+        <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
           <div class="sub-head" style="margin-top:0;">تدريب على المفهوم الأدبي<span class="section-meta">من الكتاب · ص ٣٧</span></div>
           <div class="excerpt-box">
             «هناك قادة تشعرُ أنَّ القَدَرَ يعدّهم ليوم عظيم، هذا أصدق ما يمكنُ أَنْ يُقال عن البطل المشير أحمد إسماعيل، فعندما جاءت نكسة ١٩٦٧م لم تنتظر بلادنا طويلًا؛ كي تقوم بإعداد الجيش؛ لاستعادة الأرض؛ ولهذا الغرض تم تعيين أحمد إسماعيل قائدًا عامًا للجبهة، فأنشأ الجيشين الثاني والثالث الميدانيين، وأعاد تنظيم وتسليح القوات، وخلال فترة وجيزة خاض معارك أعادت الثقة للجندي المصري منها معركة رأس العش».
@@ -3529,7 +3542,7 @@
             <path d="M490 207 C585 207 605 90 650 90" fill="none" stroke="#7B2FF7" stroke-width="2"/>
             <path d="M490 207 C585 207 605 322 650 322" fill="none" stroke="#00B86B" stroke-width="2"/>
 
-            <rect x="380" y="158" width="220" height="98" rx="8" fill="#FF6B00"/>
+            <rect x="380" y="158" width="220" height="98" rx="8" fill="#CC4B00"/>
             <text x="490" y="198" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Sans Arabic, sans-serif" font-weight="800" font-size="21">أُسْطُورَةٌ مِصْرِيَّةٌ</text>
             <text x="490" y="228" text-anchor="middle" fill="#FFF1E6" font-family="IBM Plex Sans Arabic, sans-serif" font-weight="700" font-size="14">البطل أحمد منسي (١٩٧٨–٢٠١٧)</text>
 
@@ -3932,7 +3945,7 @@
         </article>
 
         <!-- Sentence Lab L3 (Fixed Grammar Colors + المجرد والمزيد note) -->
-        <div style="margin-top:22px; padding-top:18px; border-top:2px dashed var(--border);">
+        <div style="margin-top:22px; padding-top:18px; border-top:1px solid var(--border);">
           <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
             <h3 style="margin:0;">مختبر الجملة</h3>
             <span class="meta-inline">· شرح إضافي للتوضيح</span>
